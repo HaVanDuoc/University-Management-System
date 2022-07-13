@@ -33,6 +33,7 @@
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.checkBoxShowPassword = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -77,7 +78,7 @@
             this.buttonLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonLogin.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.buttonLogin.ForeColor = System.Drawing.Color.Black;
+            this.buttonLogin.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.buttonLogin.Location = new System.Drawing.Point(118, 265);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(271, 68);
@@ -98,13 +99,26 @@
             this.checkBoxShowPassword.UseVisualStyleBackColor = true;
             this.checkBoxShowPassword.CheckedChanged += new System.EventHandler(this.checkBoxShowPassword_CheckedChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Times New Roman", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label2.Location = new System.Drawing.Point(339, 365);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(163, 23);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Đăng ký tài khoản";
+            this.label2.Click += new System.EventHandler(this.labelRegister_Click);
+            // 
             // FormLogin
             // 
             this.AcceptButton = this.buttonLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(514, 359);
+            this.ClientSize = new System.Drawing.Size(514, 397);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBoxShowPassword);
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.textBoxPassword);
@@ -128,5 +142,6 @@
         private TextBox textBoxPassword;
         private Button buttonLogin;
         private CheckBox checkBoxShowPassword;
+        private Label label2;
     }
 }

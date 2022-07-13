@@ -4,7 +4,7 @@ namespace UniversityManagementSystem
 {
     public partial class FormLogin : Form
     {
-        SqlConnection connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+        SqlConnection connection;
         SqlCommand command;
         SqlDataReader reader;
         public FormLogin()
@@ -14,7 +14,15 @@ namespace UniversityManagementSystem
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            
+            try
+            {
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+                connection.Open();
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Eixt(object sender, EventArgs e)
@@ -36,11 +44,16 @@ namespace UniversityManagementSystem
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
+
             string username = textBoxUsername.Text;
             string password = textBoxPassword.Text;
 
+            if(connection.State == System.Data.ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+
             command = new SqlCommand();
-            connection.Open();
             command.Connection = connection;
             command.CommandText = "SELECT * FROM Table_Users WHERE username='" + username + "' AND password='" + password + "'";
             reader = command.ExecuteReader();
@@ -61,7 +74,16 @@ namespace UniversityManagementSystem
                 }
             }
 
-            connection.Close();
+            if (connection.State == System.Data.ConnectionState.Open)
+            {
+                connection.Close();
+            }
+        }
+
+        private void labelRegister_Click(object sender, EventArgs e)
+        {
+            var form = new FormRegister();
+            form.ShowDialog();
         }
     }
 }
