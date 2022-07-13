@@ -38,29 +38,29 @@
             this.thoátToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.danhMụcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quảnLýToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tìmKiếmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.báoCáoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trợGiúpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quảnLýNgườiDùngToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.quảnLýSinhVienToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quảnLýGiảngViênToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tìmKiếmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.báoCáoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trợGiúpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.buttonLogOut = new System.Windows.Forms.Button();
+            this.labelPassword = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.labelFullname = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelUsername = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.buttonManagementFaculty = new System.Windows.Forms.Button();
+            this.buttonManagementClassroom = new System.Windows.Forms.Button();
+            this.buttonManagementSubjects = new System.Windows.Forms.Button();
+            this.buttonManagementLecturers = new System.Windows.Forms.Button();
+            this.buttonManagementUsers = new System.Windows.Forms.Button();
+            this.buttonManagementStudents = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -143,24 +143,6 @@
             this.quảnLýToolStripMenuItem.Size = new System.Drawing.Size(86, 26);
             this.quảnLýToolStripMenuItem.Text = "Quản lý";
             // 
-            // tìmKiếmToolStripMenuItem
-            // 
-            this.tìmKiếmToolStripMenuItem.Name = "tìmKiếmToolStripMenuItem";
-            this.tìmKiếmToolStripMenuItem.Size = new System.Drawing.Size(99, 26);
-            this.tìmKiếmToolStripMenuItem.Text = "Tìm kiếm";
-            // 
-            // báoCáoToolStripMenuItem
-            // 
-            this.báoCáoToolStripMenuItem.Name = "báoCáoToolStripMenuItem";
-            this.báoCáoToolStripMenuItem.Size = new System.Drawing.Size(89, 26);
-            this.báoCáoToolStripMenuItem.Text = "Báo cáo";
-            // 
-            // trợGiúpToolStripMenuItem
-            // 
-            this.trợGiúpToolStripMenuItem.Name = "trợGiúpToolStripMenuItem";
-            this.trợGiúpToolStripMenuItem.Size = new System.Drawing.Size(93, 26);
-            this.trợGiúpToolStripMenuItem.Text = "Trợ giúp";
-            // 
             // quảnLýNgườiDùngToolStripMenuItem1
             // 
             this.quảnLýNgườiDùngToolStripMenuItem1.Name = "quảnLýNgườiDùngToolStripMenuItem1";
@@ -179,14 +161,32 @@
             this.quảnLýGiảngViênToolStripMenuItem.Size = new System.Drawing.Size(250, 26);
             this.quảnLýGiảngViênToolStripMenuItem.Text = "Quản lý giảng viên";
             // 
+            // tìmKiếmToolStripMenuItem
+            // 
+            this.tìmKiếmToolStripMenuItem.Name = "tìmKiếmToolStripMenuItem";
+            this.tìmKiếmToolStripMenuItem.Size = new System.Drawing.Size(99, 26);
+            this.tìmKiếmToolStripMenuItem.Text = "Tìm kiếm";
+            // 
+            // báoCáoToolStripMenuItem
+            // 
+            this.báoCáoToolStripMenuItem.Name = "báoCáoToolStripMenuItem";
+            this.báoCáoToolStripMenuItem.Size = new System.Drawing.Size(89, 26);
+            this.báoCáoToolStripMenuItem.Text = "Báo cáo";
+            // 
+            // trợGiúpToolStripMenuItem
+            // 
+            this.trợGiúpToolStripMenuItem.Name = "trợGiúpToolStripMenuItem";
+            this.trợGiúpToolStripMenuItem.Size = new System.Drawing.Size(93, 26);
+            this.trợGiúpToolStripMenuItem.Text = "Trợ giúp";
+            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.buttonLogOut);
+            this.groupBox1.Controls.Add(this.labelPassword);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.labelFullname);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.labelUsername);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Location = new System.Drawing.Point(16, 53);
@@ -195,6 +195,67 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin người dùng";
+            // 
+            // buttonLogOut
+            // 
+            this.buttonLogOut.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonLogOut.Location = new System.Drawing.Point(66, 506);
+            this.buttonLogOut.Name = "buttonLogOut";
+            this.buttonLogOut.Size = new System.Drawing.Size(217, 64);
+            this.buttonLogOut.TabIndex = 7;
+            this.buttonLogOut.Text = "Đăng xuất";
+            this.buttonLogOut.UseVisualStyleBackColor = true;
+            // 
+            // labelPassword
+            // 
+            this.labelPassword.AutoSize = true;
+            this.labelPassword.Location = new System.Drawing.Point(141, 440);
+            this.labelPassword.Name = "labelPassword";
+            this.labelPassword.Size = new System.Drawing.Size(0, 22);
+            this.labelPassword.TabIndex = 6;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(29, 440);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(88, 22);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Mật khẩu:";
+            // 
+            // labelFullname
+            // 
+            this.labelFullname.AutoSize = true;
+            this.labelFullname.Location = new System.Drawing.Point(138, 399);
+            this.labelFullname.Name = "labelFullname";
+            this.labelFullname.Size = new System.Drawing.Size(0, 22);
+            this.labelFullname.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(29, 399);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(68, 22);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Họ tên:";
+            // 
+            // labelUsername
+            // 
+            this.labelUsername.AutoSize = true;
+            this.labelUsername.Location = new System.Drawing.Point(138, 360);
+            this.labelUsername.Name = "labelUsername";
+            this.labelUsername.Size = new System.Drawing.Size(0, 22);
+            this.labelUsername.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(29, 360);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(94, 22);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Username:";
             // 
             // pictureBox1
             // 
@@ -206,24 +267,6 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 360);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 22);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Username:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(138, 360);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 22);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "havanduoc";
-            // 
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
@@ -234,60 +277,14 @@
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 399);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 22);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Họ tên:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(138, 399);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(119, 22);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Hà Văn Được";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(29, 440);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(88, 22);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Mật khẩu:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(141, 440);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 22);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "******";
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(66, 506);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(217, 64);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Đăng xuất";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button7);
-            this.groupBox2.Controls.Add(this.button6);
-            this.groupBox2.Controls.Add(this.button5);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.buttonManagementFaculty);
+            this.groupBox2.Controls.Add(this.buttonManagementClassroom);
+            this.groupBox2.Controls.Add(this.buttonManagementSubjects);
+            this.groupBox2.Controls.Add(this.buttonManagementLecturers);
+            this.groupBox2.Controls.Add(this.buttonManagementUsers);
+            this.groupBox2.Controls.Add(this.buttonManagementStudents);
             this.groupBox2.Location = new System.Drawing.Point(379, 328);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(891, 313);
@@ -295,59 +292,60 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "MENU";
             // 
-            // button2
+            // buttonManagementFaculty
             // 
-            this.button2.Location = new System.Drawing.Point(230, 58);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(183, 76);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "QL Sinh Viên";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonManagementFaculty.Location = new System.Drawing.Point(230, 165);
+            this.buttonManagementFaculty.Name = "buttonManagementFaculty";
+            this.buttonManagementFaculty.Size = new System.Drawing.Size(183, 76);
+            this.buttonManagementFaculty.TabIndex = 5;
+            this.buttonManagementFaculty.Text = "QL Khoa";
+            this.buttonManagementFaculty.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // buttonManagementClassroom
             // 
-            this.button3.Location = new System.Drawing.Point(31, 58);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(183, 76);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "QL Người dùng";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonManagementClassroom.Location = new System.Drawing.Point(31, 165);
+            this.buttonManagementClassroom.Name = "buttonManagementClassroom";
+            this.buttonManagementClassroom.Size = new System.Drawing.Size(183, 76);
+            this.buttonManagementClassroom.TabIndex = 4;
+            this.buttonManagementClassroom.Text = "QL Lớp học";
+            this.buttonManagementClassroom.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // buttonManagementSubjects
             // 
-            this.button4.Location = new System.Drawing.Point(431, 58);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(183, 76);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "QL Giảng Viên";
-            this.button4.UseVisualStyleBackColor = true;
+            this.buttonManagementSubjects.Location = new System.Drawing.Point(636, 58);
+            this.buttonManagementSubjects.Name = "buttonManagementSubjects";
+            this.buttonManagementSubjects.Size = new System.Drawing.Size(183, 76);
+            this.buttonManagementSubjects.TabIndex = 3;
+            this.buttonManagementSubjects.Text = "QL Môn học";
+            this.buttonManagementSubjects.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // buttonManagementLecturers
             // 
-            this.button5.Location = new System.Drawing.Point(636, 58);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(183, 76);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "QL Môn học";
-            this.button5.UseVisualStyleBackColor = true;
+            this.buttonManagementLecturers.Location = new System.Drawing.Point(431, 58);
+            this.buttonManagementLecturers.Name = "buttonManagementLecturers";
+            this.buttonManagementLecturers.Size = new System.Drawing.Size(183, 76);
+            this.buttonManagementLecturers.TabIndex = 2;
+            this.buttonManagementLecturers.Text = "QL Giảng Viên";
+            this.buttonManagementLecturers.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // buttonManagementUsers
             // 
-            this.button6.Location = new System.Drawing.Point(31, 165);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(183, 76);
-            this.button6.TabIndex = 4;
-            this.button6.Text = "QL Lớp học";
-            this.button6.UseVisualStyleBackColor = true;
+            this.buttonManagementUsers.Location = new System.Drawing.Point(31, 58);
+            this.buttonManagementUsers.Name = "buttonManagementUsers";
+            this.buttonManagementUsers.Size = new System.Drawing.Size(183, 76);
+            this.buttonManagementUsers.TabIndex = 1;
+            this.buttonManagementUsers.Text = "QL Người dùng";
+            this.buttonManagementUsers.UseVisualStyleBackColor = true;
+            this.buttonManagementUsers.Click += new System.EventHandler(this.buttonManagementUsers_Click);
             // 
-            // button7
+            // buttonManagementStudents
             // 
-            this.button7.Location = new System.Drawing.Point(230, 165);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(183, 76);
-            this.button7.TabIndex = 5;
-            this.button7.Text = "QL Khoa";
-            this.button7.UseVisualStyleBackColor = true;
+            this.buttonManagementStudents.Location = new System.Drawing.Point(230, 58);
+            this.buttonManagementStudents.Name = "buttonManagementStudents";
+            this.buttonManagementStudents.Size = new System.Drawing.Size(183, 76);
+            this.buttonManagementStudents.TabIndex = 0;
+            this.buttonManagementStudents.Text = "QL Sinh Viên";
+            this.buttonManagementStudents.UseVisualStyleBackColor = true;
             // 
             // FormManager
             // 
@@ -365,6 +363,7 @@
             this.Name = "FormManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormManager";
+            this.Load += new System.EventHandler(this.FormManager_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -395,21 +394,21 @@
         private ToolStripMenuItem quảnLýSinhVienToolStripMenuItem;
         private ToolStripMenuItem quảnLýGiảngViênToolStripMenuItem;
         private GroupBox groupBox1;
-        private Label label3;
+        private Label labelUsername;
         private Label label2;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
-        private Button button1;
-        private Label label6;
+        private Button buttonLogOut;
+        private Label labelPassword;
         private Label label5;
-        private Label label4;
+        private Label labelFullname;
         private Label label1;
         private GroupBox groupBox2;
-        private Button button7;
-        private Button button6;
-        private Button button5;
-        private Button button4;
-        private Button button3;
-        private Button button2;
+        private Button buttonManagementFaculty;
+        private Button buttonManagementClassroom;
+        private Button buttonManagementSubjects;
+        private Button buttonManagementLecturers;
+        private Button buttonManagementUsers;
+        private Button buttonManagementStudents;
     }
 }

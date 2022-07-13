@@ -60,7 +60,8 @@ namespace UniversityManagementSystem
 
             if (reader.Read())
             {
-                MessageBox.Show("Đăng nhập thành công!", "Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BienToanCuc.logged = username;
+
                 var form = new FormManager();
                 form.Show();
                 this.Close();

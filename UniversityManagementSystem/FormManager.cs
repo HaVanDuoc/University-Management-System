@@ -7,14 +7,73 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace UniversityManagementSystem
 {
     public partial class FormManager : Form
     {
+        SqlConnection connection;
+        SqlCommand command;
+        SqlDataReader reader;
         public FormManager()
         {
             InitializeComponent();
+        }
+
+        private void FormManager_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+                connection.Open();
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // Load thông tin người dùng
+
+            command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT * FROM Table_Users WHERE username='" + BienToanCuc.logged + "'";
+            reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                // fullname
+                int fullnameIndex = reader.GetOrdinal("fullname");
+                string fullname = reader.GetString(fullnameIndex);
+
+                // username
+                int usernameIndex = reader.GetOrdinal("username");
+                string username = reader.GetString(usernameIndex);
+
+                // password
+                int passwordIndex = reader.GetOrdinal("password");
+                string password = reader.GetString(usernameIndex);
+
+            }
+            else
+            {
+                labelFullname.Text = "";
+                labelUsername.Text = "";
+                labelPassword.Text = "";
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void buttonManagementUsers_Click(object sender, EventArgs e)
+        {
+            var form = new FormManagementUsers();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
         }
     }
 }
