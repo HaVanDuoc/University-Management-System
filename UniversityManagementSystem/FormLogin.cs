@@ -60,7 +60,7 @@ namespace UniversityManagementSystem
 
             if (reader.Read())
             {
-                BienToanCuc.logged = username;
+                //BienToanCuc.logged = username;
 
                 var form = new FormManager();
                 form.Show();

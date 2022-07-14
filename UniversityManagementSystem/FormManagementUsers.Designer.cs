@@ -33,9 +33,9 @@
             this.buttonSearch = new System.Windows.Forms.Button();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxFullname = new System.Windows.Forms.TextBox();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,6 +45,12 @@
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.listViewListUser = new System.Windows.Forms.ListView();
+            this.columnHeaderID = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderFullname = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderUsername = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderPassword = new System.Windows.Forms.ColumnHeader();
+            this.textBoxId = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -99,12 +105,16 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.textBoxId);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.textBoxFullname);
+            this.groupBox2.Controls.Add(this.textBoxPassword);
+            this.groupBox2.Controls.Add(this.textBoxUsername);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Font = new System.Drawing.Font("Times New Roman", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.groupBox2.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.groupBox2.Location = new System.Drawing.Point(12, 145);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(378, 496);
@@ -112,31 +122,33 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông tin chi tiết";
             // 
-            // textBox3
+            // textBoxFullname
             // 
-            this.textBox3.Location = new System.Drawing.Point(142, 140);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(230, 30);
-            this.textBox3.TabIndex = 5;
+            this.textBoxFullname.Location = new System.Drawing.Point(142, 171);
+            this.textBoxFullname.Name = "textBoxFullname";
+            this.textBoxFullname.Size = new System.Drawing.Size(230, 30);
+            this.textBoxFullname.TabIndex = 5;
             // 
-            // textBox2
+            // textBoxPassword
             // 
-            this.textBox2.Location = new System.Drawing.Point(142, 96);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(230, 30);
-            this.textBox2.TabIndex = 4;
+            this.textBoxPassword.Location = new System.Drawing.Point(142, 127);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(230, 30);
+            this.textBoxPassword.TabIndex = 4;
             // 
-            // textBox1
+            // textBoxUsername
             // 
-            this.textBox1.Location = new System.Drawing.Point(142, 55);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(230, 30);
-            this.textBox1.TabIndex = 3;
+            this.textBoxUsername.Location = new System.Drawing.Point(142, 86);
+            this.textBoxUsername.Name = "textBoxUsername";
+            this.textBoxUsername.Size = new System.Drawing.Size(230, 30);
+            this.textBoxUsername.TabIndex = 3;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 143);
+            this.label4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label4.Location = new System.Drawing.Point(6, 174);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(68, 22);
             this.label4.TabIndex = 2;
@@ -145,7 +157,9 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 99);
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label3.Location = new System.Drawing.Point(6, 130);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 22);
             this.label3.TabIndex = 1;
@@ -154,7 +168,9 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 58);
+            this.label2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label2.Location = new System.Drawing.Point(6, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(130, 22);
             this.label2.TabIndex = 0;
@@ -198,6 +214,7 @@
             this.buttonDelete.Text = "Xóa";
             this.buttonDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonEdit
             // 
@@ -210,6 +227,7 @@
             this.buttonEdit.Text = "Chỉnh sửa";
             this.buttonEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonAdd
             // 
@@ -222,14 +240,61 @@
             this.buttonAdd.Text = "Thêm mới";
             this.buttonAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // listViewListUser
             // 
+            this.listViewListUser.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderID,
+            this.columnHeaderFullname,
+            this.columnHeaderUsername,
+            this.columnHeaderPassword});
             this.listViewListUser.Location = new System.Drawing.Point(15, 29);
             this.listViewListUser.Name = "listViewListUser";
             this.listViewListUser.Size = new System.Drawing.Size(843, 381);
             this.listViewListUser.TabIndex = 0;
             this.listViewListUser.UseCompatibleStateImageBehavior = false;
+            this.listViewListUser.View = System.Windows.Forms.View.Details;
+            this.listViewListUser.SelectedIndexChanged += new System.EventHandler(this.listViewListUser_SelectedIndexChanged);
+            // 
+            // columnHeaderID
+            // 
+            this.columnHeaderID.Text = "ID";
+            // 
+            // columnHeaderFullname
+            // 
+            this.columnHeaderFullname.Text = "Họ tên";
+            this.columnHeaderFullname.Width = 250;
+            // 
+            // columnHeaderUsername
+            // 
+            this.columnHeaderUsername.Text = "Tên đăng nhập";
+            this.columnHeaderUsername.Width = 300;
+            // 
+            // columnHeaderPassword
+            // 
+            this.columnHeaderPassword.Text = "Mật khẩu";
+            this.columnHeaderPassword.Width = 200;
+            // 
+            // textBoxId
+            // 
+            this.textBoxId.ForeColor = System.Drawing.Color.Red;
+            this.textBoxId.Location = new System.Drawing.Point(142, 50);
+            this.textBoxId.Name = "textBoxId";
+            this.textBoxId.ReadOnly = true;
+            this.textBoxId.Size = new System.Drawing.Size(230, 30);
+            this.textBoxId.TabIndex = 7;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(6, 53);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(36, 22);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "ID:";
             // 
             // FormManagementUsers
             // 
@@ -246,6 +311,7 @@
             this.Name = "FormManagementUsers";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý người dùng";
+            this.Load += new System.EventHandler(this.FormManagementUsers_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -269,11 +335,17 @@
         private Button buttonEdit;
         private Button buttonSearch;
         private TextBox textBoxSearch;
-        private TextBox textBox3;
-        private TextBox textBox2;
-        private TextBox textBox1;
+        private TextBox textBoxFullname;
+        private TextBox textBoxPassword;
+        private TextBox textBoxUsername;
         private Label label4;
         private Label label3;
         private Label label2;
+        private ColumnHeader columnHeaderID;
+        private ColumnHeader columnHeaderFullname;
+        private ColumnHeader columnHeaderPassword;
+        private ColumnHeader columnHeaderUsername;
+        private TextBox textBoxId;
+        private Label label5;
     }
 }
