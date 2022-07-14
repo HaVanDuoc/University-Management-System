@@ -33,6 +33,8 @@
             this.buttonSearch = new System.Windows.Forms.Button();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBoxId = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.textBoxFullname = new System.Windows.Forms.TextBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
@@ -49,8 +51,6 @@
             this.columnHeaderFullname = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderUsername = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderPassword = new System.Windows.Forms.ColumnHeader();
-            this.textBoxId = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -94,6 +94,7 @@
             this.buttonSearch.Text = "Tìm kiếm";
             this.buttonSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // textBoxSearch
             // 
@@ -102,6 +103,7 @@
             this.textBoxSearch.PlaceholderText = "Bạn đang tìm gì?";
             this.textBoxSearch.Size = new System.Drawing.Size(501, 30);
             this.textBoxSearch.TabIndex = 0;
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
             // groupBox2
             // 
@@ -121,6 +123,26 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thông tin chi tiết";
+            // 
+            // textBoxId
+            // 
+            this.textBoxId.ForeColor = System.Drawing.Color.Red;
+            this.textBoxId.Location = new System.Drawing.Point(142, 50);
+            this.textBoxId.Name = "textBoxId";
+            this.textBoxId.ReadOnly = true;
+            this.textBoxId.Size = new System.Drawing.Size(230, 30);
+            this.textBoxId.TabIndex = 7;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(6, 53);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(36, 22);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "ID:";
             // 
             // textBoxFullname
             // 
@@ -275,26 +297,6 @@
             // 
             this.columnHeaderPassword.Text = "Mật khẩu";
             this.columnHeaderPassword.Width = 200;
-            // 
-            // textBoxId
-            // 
-            this.textBoxId.ForeColor = System.Drawing.Color.Red;
-            this.textBoxId.Location = new System.Drawing.Point(142, 50);
-            this.textBoxId.Name = "textBoxId";
-            this.textBoxId.ReadOnly = true;
-            this.textBoxId.Size = new System.Drawing.Size(230, 30);
-            this.textBoxId.TabIndex = 7;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(6, 53);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(36, 22);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "ID:";
             // 
             // FormManagementUsers
             // 

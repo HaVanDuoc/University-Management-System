@@ -270,7 +270,7 @@ namespace UniversityManagementSystem
                     // thực thi câu truy vấn
                     command.ExecuteNonQuery();
 
-                    MessageBox.Show("Đã xóa!", "Thông báo");
+                    MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     ListUsers();
 
@@ -288,9 +288,40 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo");
+                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+        }
+
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            command = new SqlCommand("Select * from Table_Users Where username Like'%" + textBoxSearch.Text + "%' or fullname Like'%" + textBoxSearch.Text + "%'", connection);
+            SqlDataReader reader;
+
+            connection.Open();
+
+            reader = command.ExecuteReader();
+            command.Dispose();
+            listViewListUser.Items.Clear();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+
+                    ListViewItem item = new ListViewItem(reader[0].ToString()); // Or you can specify column name - ListViewItem item = new ListViewItem(reader["column_name"].ToString()); 
+                    item.SubItems.Add(reader[1].ToString());
+                    item.SubItems.Add(reader[2].ToString());
+                    item.SubItems.Add(reader[3].ToString());
+                    listViewListUser.Items.Add(item); // add this item to your ListView with all of his subitems
+                }
+            }
+            reader.Close();
+            connection.Close();
         }
     }
 }
