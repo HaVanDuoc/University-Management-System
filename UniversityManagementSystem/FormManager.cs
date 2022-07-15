@@ -13,9 +13,9 @@ namespace UniversityManagementSystem
 {
     public partial class FormManager : Form
     {
-        SqlConnection connection;
-        SqlCommand command;
-        SqlDataReader reader;
+        private SqlConnection connection;
+        private SqlCommand command;
+        private SqlDataReader reader;
         public FormManager()
         {
             InitializeComponent();
@@ -37,22 +37,26 @@ namespace UniversityManagementSystem
 
             command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT * FROM Table_Users WHERE username='" + BienToanCuc.logged + "'";
+            command.CommandText = "SELECT * FROM Table_Users WHERE username='" + FormLogin.logged + "'";
             reader = command.ExecuteReader();
 
             if (reader.Read())
             {
+                labelFullname.Text = reader["fullname"].ToString();
+                labelUsername.Text = reader["username"].ToString();
+                labelPassword.Text = reader["password"].ToString();
+
                 // fullname
-                int fullnameIndex = reader.GetOrdinal("fullname");
-                string fullname = reader.GetString(fullnameIndex);
+                //int fullnameIndex = reader.GetOrdinal("fullname");
+                //string fullname = reader.GetString(fullnameIndex);
 
                 // username
-                int usernameIndex = reader.GetOrdinal("username");
-                string username = reader.GetString(usernameIndex);
+                //int usernameIndex = reader.GetOrdinal("username");
+                //string username = reader.GetString(usernameIndex);
 
                 // password
-                int passwordIndex = reader.GetOrdinal("password");
-                string password = reader.GetString(usernameIndex);
+                //int passwordIndex = reader.GetOrdinal("password");
+                //string password = reader.GetString(usernameIndex);
 
             }
             else
@@ -74,6 +78,24 @@ namespace UniversityManagementSystem
             this.Hide();
             form.ShowDialog();
             this.Show();
+        }
+
+        private void buttonManagementFaculty_Click(object sender, EventArgs e)
+        {
+            var form = new FormManagementFaculty();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
+        }
+
+        private void buttonLogOut_Click(object sender, EventArgs e)
+        {
+            DialogResult dlr = MessageBox.Show("Bạn có muốn đăng xuất?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(dlr == DialogResult.Yes)
+            {
+                FormLogin.logged = "";
+                this.Close();
+            }
         }
     }
 }

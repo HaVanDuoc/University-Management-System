@@ -20,7 +20,9 @@ namespace UniversityManagementSystem
         private void button1_Click(object sender, EventArgs e)
         {
             var form = new FormLogin();
-            form.Show();
+            form.ShowDialog();
+            this.Hide();
+            this.Show();
         }
     }
 }

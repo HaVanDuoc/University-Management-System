@@ -7,6 +7,7 @@ namespace UniversityManagementSystem
         SqlConnection connection;
         SqlCommand command;
         SqlDataReader reader;
+        public static string logged;
         public FormLogin()
         {
             InitializeComponent();
@@ -60,11 +61,15 @@ namespace UniversityManagementSystem
 
             if (reader.Read())
             {
-                //BienToanCuc.logged = username;
+                // lưu username
+                //int usernameIndex = reader.GetOrdinal("username");
+                //username = reader.GetString(usernameIndex);
+                logged = reader["username"].ToString();
 
                 var form = new FormManager();
-                form.Show();
-                this.Close();
+                this.Hide();
+                form.ShowDialog();
+                this.Show();
             }
             else
             {

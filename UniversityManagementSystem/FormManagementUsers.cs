@@ -13,11 +13,11 @@ namespace UniversityManagementSystem
 {
     public partial class FormManagementUsers : Form
     {
-        SqlConnection connection;
-        SqlCommand command;
-        SqlDataAdapter dataAdapter;
-        DataSet dataSet;
-        SqlDataReader reader;
+        private SqlConnection connection;
+        private SqlCommand command;
+        private SqlDataAdapter dataAdapter;
+        private DataSet dataSet;
+        private SqlDataReader reader;
 
         // Lấy danh sách User
         DataTable ReadListUsers()

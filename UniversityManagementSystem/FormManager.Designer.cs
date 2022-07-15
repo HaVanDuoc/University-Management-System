@@ -131,7 +131,7 @@
             // 
             this.danhMụcToolStripMenuItem.Name = "danhMụcToolStripMenuItem";
             this.danhMụcToolStripMenuItem.Size = new System.Drawing.Size(102, 26);
-            this.danhMụcToolStripMenuItem.Text = "Danh mục";
+            this.danhMụcToolStripMenuItem.Text = "&Danh mục";
             // 
             // quảnLýToolStripMenuItem
             // 
@@ -141,7 +141,7 @@
             this.quảnLýGiảngViênToolStripMenuItem});
             this.quảnLýToolStripMenuItem.Name = "quảnLýToolStripMenuItem";
             this.quảnLýToolStripMenuItem.Size = new System.Drawing.Size(86, 26);
-            this.quảnLýToolStripMenuItem.Text = "Quản lý";
+            this.quảnLýToolStripMenuItem.Text = "&Quản lý";
             // 
             // quảnLýNgườiDùngToolStripMenuItem1
             // 
@@ -165,19 +165,19 @@
             // 
             this.tìmKiếmToolStripMenuItem.Name = "tìmKiếmToolStripMenuItem";
             this.tìmKiếmToolStripMenuItem.Size = new System.Drawing.Size(99, 26);
-            this.tìmKiếmToolStripMenuItem.Text = "Tìm kiếm";
+            this.tìmKiếmToolStripMenuItem.Text = "&Tìm kiếm";
             // 
             // báoCáoToolStripMenuItem
             // 
             this.báoCáoToolStripMenuItem.Name = "báoCáoToolStripMenuItem";
             this.báoCáoToolStripMenuItem.Size = new System.Drawing.Size(89, 26);
-            this.báoCáoToolStripMenuItem.Text = "Báo cáo";
+            this.báoCáoToolStripMenuItem.Text = "&Báo cáo";
             // 
             // trợGiúpToolStripMenuItem
             // 
             this.trợGiúpToolStripMenuItem.Name = "trợGiúpToolStripMenuItem";
             this.trợGiúpToolStripMenuItem.Size = new System.Drawing.Size(93, 26);
-            this.trợGiúpToolStripMenuItem.Text = "Trợ giúp";
+            this.trợGiúpToolStripMenuItem.Text = "&Trợ giúp";
             // 
             // groupBox1
             // 
@@ -205,6 +205,7 @@
             this.buttonLogOut.TabIndex = 7;
             this.buttonLogOut.Text = "Đăng xuất";
             this.buttonLogOut.UseVisualStyleBackColor = true;
+            this.buttonLogOut.Click += new System.EventHandler(this.buttonLogOut_Click);
             // 
             // labelPassword
             // 
@@ -226,7 +227,7 @@
             // labelFullname
             // 
             this.labelFullname.AutoSize = true;
-            this.labelFullname.Location = new System.Drawing.Point(138, 399);
+            this.labelFullname.Location = new System.Drawing.Point(138, 360);
             this.labelFullname.Name = "labelFullname";
             this.labelFullname.Size = new System.Drawing.Size(0, 22);
             this.labelFullname.TabIndex = 4;
@@ -234,7 +235,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 399);
+            this.label1.Location = new System.Drawing.Point(29, 360);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 22);
             this.label1.TabIndex = 3;
@@ -243,7 +244,7 @@
             // labelUsername
             // 
             this.labelUsername.AutoSize = true;
-            this.labelUsername.Location = new System.Drawing.Point(138, 360);
+            this.labelUsername.Location = new System.Drawing.Point(165, 401);
             this.labelUsername.Name = "labelUsername";
             this.labelUsername.Size = new System.Drawing.Size(0, 22);
             this.labelUsername.TabIndex = 2;
@@ -251,11 +252,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 360);
+            this.label2.Location = new System.Drawing.Point(29, 401);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 22);
+            this.label2.Size = new System.Drawing.Size(130, 22);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Username:";
+            this.label2.Text = "Tên đăng nhập:";
             // 
             // pictureBox1
             // 
@@ -300,6 +301,7 @@
             this.buttonManagementFaculty.TabIndex = 5;
             this.buttonManagementFaculty.Text = "QL Khoa";
             this.buttonManagementFaculty.UseVisualStyleBackColor = true;
+            this.buttonManagementFaculty.Click += new System.EventHandler(this.buttonManagementFaculty_Click);
             // 
             // buttonManagementClassroom
             // 
