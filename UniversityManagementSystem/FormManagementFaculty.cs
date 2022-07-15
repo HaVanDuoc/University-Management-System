@@ -129,5 +129,118 @@ namespace UniversityManagementSystem
             reader.Close();
             connection.Close();
         }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBoxName.Text))
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                String tenKhoa = textBoxName.Text.Trim();
+
+                // Kiểm tra tài khoản đã tồn tại hay chưa
+                command = new SqlCommand("SELECT * FROM Table_Faculty WHERE tenKhoa = '" + tenKhoa + "'", connection);
+                reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    reader.Close();
+                    DialogResult dlr = MessageBox.Show("Đã có khoa này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (dlr == DialogResult.OK)
+                    {
+                        textBoxName.Focus();
+                    }
+                    return;
+                }
+                else
+                {
+                    reader.Close();
+                    command = new SqlCommand();
+                    command.Connection = connection;
+
+                    string query = @"INSERT INTO Table_Faculty VALUES(@tenKhoa)";
+                    command.CommandText = query;
+                    command.Parameters.AddWithValue("@tenKhoa", tenKhoa);
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Đã tạo khoa mới!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    XuatDanhSach();
+
+                    ResetTextBox();
+
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+
+            }
+            else
+            {
+                DialogResult dlr = MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dlr == DialogResult.OK)
+                {
+                    textBoxName.Focus();
+                }
+            }
+            
+        }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBoxId.Text))
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                String id = textBoxId.Text;
+                String name = textBoxName.Text;
+
+                String queryUpdate = "UPDATE Table_Faculty SET tenKhoa = '" + name + "'";
+
+                try
+                {
+                    command = new SqlCommand(queryUpdate, connection);
+
+                    // thực thi câu truy vấn
+                    command.ExecuteNonQuery();
+
+                    MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    XuatDanhSach();
+
+                    ResetTextBox();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi: " + ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn khoa!", "Thông báo");
+                return;
+            }
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

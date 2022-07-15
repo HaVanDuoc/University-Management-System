@@ -46,7 +46,7 @@
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
-            this.listViewListUser = new System.Windows.Forms.ListView();
+            this.listViewList = new System.Windows.Forms.ListView();
             this.columnHeaderID = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderFullname = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderUsername = new System.Windows.Forms.ColumnHeader();
@@ -126,6 +126,7 @@
             // 
             // textBoxId
             // 
+            this.textBoxId.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.textBoxId.ForeColor = System.Drawing.Color.Red;
             this.textBoxId.Location = new System.Drawing.Point(142, 50);
             this.textBoxId.Name = "textBoxId";
@@ -146,6 +147,7 @@
             // 
             // textBoxFullname
             // 
+            this.textBoxFullname.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textBoxFullname.Location = new System.Drawing.Point(142, 171);
             this.textBoxFullname.Name = "textBoxFullname";
             this.textBoxFullname.Size = new System.Drawing.Size(230, 30);
@@ -153,6 +155,7 @@
             // 
             // textBoxPassword
             // 
+            this.textBoxPassword.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textBoxPassword.Location = new System.Drawing.Point(142, 127);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(230, 30);
@@ -160,6 +163,7 @@
             // 
             // textBoxUsername
             // 
+            this.textBoxUsername.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textBoxUsername.Location = new System.Drawing.Point(142, 86);
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(230, 30);
@@ -204,7 +208,7 @@
             this.groupBox3.Controls.Add(this.buttonDelete);
             this.groupBox3.Controls.Add(this.buttonEdit);
             this.groupBox3.Controls.Add(this.buttonAdd);
-            this.groupBox3.Controls.Add(this.listViewListUser);
+            this.groupBox3.Controls.Add(this.listViewList);
             this.groupBox3.Location = new System.Drawing.Point(396, 145);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(874, 496);
@@ -264,20 +268,20 @@
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
-            // listViewListUser
+            // listViewList
             // 
-            this.listViewListUser.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderID,
             this.columnHeaderFullname,
             this.columnHeaderUsername,
             this.columnHeaderPassword});
-            this.listViewListUser.Location = new System.Drawing.Point(15, 29);
-            this.listViewListUser.Name = "listViewListUser";
-            this.listViewListUser.Size = new System.Drawing.Size(843, 381);
-            this.listViewListUser.TabIndex = 0;
-            this.listViewListUser.UseCompatibleStateImageBehavior = false;
-            this.listViewListUser.View = System.Windows.Forms.View.Details;
-            this.listViewListUser.SelectedIndexChanged += new System.EventHandler(this.listViewListUser_SelectedIndexChanged);
+            this.listViewList.Location = new System.Drawing.Point(15, 29);
+            this.listViewList.Name = "listViewList";
+            this.listViewList.Size = new System.Drawing.Size(843, 381);
+            this.listViewList.TabIndex = 0;
+            this.listViewList.UseCompatibleStateImageBehavior = false;
+            this.listViewList.View = System.Windows.Forms.View.Details;
+            this.listViewList.SelectedIndexChanged += new System.EventHandler(this.listViewList_SelectedIndexChanged);
             // 
             // columnHeaderID
             // 
@@ -331,7 +335,7 @@
         private GroupBox groupBox2;
         private GroupBox groupBox3;
         private Button buttonAdd;
-        private ListView listViewListUser;
+        private ListView listViewList;
         private Button buttonExit;
         private Button buttonDelete;
         private Button buttonEdit;
