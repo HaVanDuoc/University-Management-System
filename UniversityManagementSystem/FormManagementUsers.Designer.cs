@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormManagementUsers));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonSearch = new System.Windows.Forms.Button();
@@ -76,28 +77,32 @@
             this.groupBox1.AutoSize = true;
             this.groupBox1.Controls.Add(this.buttonSearch);
             this.groupBox1.Controls.Add(this.textBoxSearch);
+            this.groupBox1.Font = new System.Drawing.Font("Times New Roman", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.groupBox1.Location = new System.Drawing.Point(12, 57);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1258, 111);
+            this.groupBox1.Size = new System.Drawing.Size(1258, 112);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tìm kiếm";
             // 
             // buttonSearch
             // 
-            this.buttonSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSearch.Location = new System.Drawing.Point(1017, 39);
+            this.buttonSearch.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonSearch.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+            this.buttonSearch.Location = new System.Drawing.Point(1026, 24);
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.buttonSearch.Size = new System.Drawing.Size(126, 30);
+            this.buttonSearch.Size = new System.Drawing.Size(57, 59);
             this.buttonSearch.TabIndex = 5;
-            this.buttonSearch.Text = "Tìm kiếm";
             this.buttonSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonSearch.UseVisualStyleBackColor = true;
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // textBoxSearch
             // 
+            this.textBoxSearch.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textBoxSearch.Location = new System.Drawing.Point(510, 39);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.PlaceholderText = "Bạn đang tìm gì?";
@@ -209,6 +214,8 @@
             this.groupBox3.Controls.Add(this.buttonEdit);
             this.groupBox3.Controls.Add(this.buttonAdd);
             this.groupBox3.Controls.Add(this.listViewList);
+            this.groupBox3.Font = new System.Drawing.Font("Times New Roman", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.groupBox3.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.groupBox3.Location = new System.Drawing.Point(396, 145);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(874, 496);
@@ -218,33 +225,40 @@
             // 
             // buttonExit
             // 
-            this.buttonExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonExit.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonExit.ForeColor = System.Drawing.Color.SandyBrown;
+            this.buttonExit.Image = ((System.Drawing.Image)(resources.GetObject("buttonExit.Image")));
             this.buttonExit.Location = new System.Drawing.Point(693, 426);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.buttonExit.Size = new System.Drawing.Size(165, 55);
             this.buttonExit.TabIndex = 4;
             this.buttonExit.Text = "Thoát";
+            this.buttonExit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonExit.UseVisualStyleBackColor = true;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
             // buttonDelete
             // 
-            this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDelete.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonDelete.ForeColor = System.Drawing.Color.Brown;
+            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.Location = new System.Drawing.Point(357, 426);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.buttonDelete.Size = new System.Drawing.Size(165, 55);
             this.buttonDelete.TabIndex = 3;
             this.buttonDelete.Text = "Xóa";
+            this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonEdit
             // 
-            this.buttonEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonEdit.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonEdit.Image = ((System.Drawing.Image)(resources.GetObject("buttonEdit.Image")));
             this.buttonEdit.Location = new System.Drawing.Point(186, 426);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -257,7 +271,9 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAdd.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonAdd.ForeColor = System.Drawing.Color.ForestGreen;
+            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.Location = new System.Drawing.Point(15, 426);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -275,6 +291,7 @@
             this.columnHeaderFullname,
             this.columnHeaderUsername,
             this.columnHeaderPassword});
+            this.listViewList.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.listViewList.Location = new System.Drawing.Point(15, 29);
             this.listViewList.Name = "listViewList";
             this.listViewList.Size = new System.Drawing.Size(843, 381);

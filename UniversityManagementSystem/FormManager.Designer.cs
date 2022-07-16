@@ -199,11 +199,15 @@
             // buttonLogOut
             // 
             this.buttonLogOut.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonLogOut.ForeColor = System.Drawing.Color.Orange;
+            this.buttonLogOut.Image = ((System.Drawing.Image)(resources.GetObject("buttonLogOut.Image")));
             this.buttonLogOut.Location = new System.Drawing.Point(66, 506);
             this.buttonLogOut.Name = "buttonLogOut";
             this.buttonLogOut.Size = new System.Drawing.Size(217, 64);
             this.buttonLogOut.TabIndex = 7;
             this.buttonLogOut.Text = "Đăng xuất";
+            this.buttonLogOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonLogOut.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonLogOut.UseVisualStyleBackColor = true;
             this.buttonLogOut.Click += new System.EventHandler(this.buttonLogOut_Click);
             // 
