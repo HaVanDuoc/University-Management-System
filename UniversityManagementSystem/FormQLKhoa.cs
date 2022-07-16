@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
+
 namespace UniversityManagementSystem
 {
-    public partial class FormManagementUsers : Form
+    public partial class FormQLKhoa : Form
     {
+        public FormQLKhoa()
+        {
+            InitializeComponent();
+        }
+
         private SqlConnection connection;
         private SqlCommand command;
         private SqlDataAdapter dataAdapter;
@@ -49,7 +55,7 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = "SELECT * FROM Table_Users";
+            String query = "SELECT * FROM Table_Khoa";
 
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
@@ -69,23 +75,11 @@ namespace UniversityManagementSystem
         private void ResetTextBox()
         {
             textBoxId.Text = "";
-            textBoxUsername.Text = "";
-            textBoxPassword.Text = "";
-            textBoxFullname.Text = "";
-            textBoxUsername.Focus();
+            textBoxName.Text = "";
+            textBoxName.Focus();
         }
 
-        public FormManagementUsers()
-        {
-            InitializeComponent();
-        }
-
-        private void buttonExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void FormManagementUsers_Load(object sender, EventArgs e)
+        private void FormQLKhoa_Load(object sender, EventArgs e)
         {
             try
             {
@@ -99,30 +93,49 @@ namespace UniversityManagementSystem
             }
         }
 
+        //list view
+        private void listViewList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Danh sách Khoa
+            int i = listViewList.FocusedItem.Index;
+            if (i < 0) return;
+            textBoxId.Text = listViewList.Items[i].Text;
+            textBoxName.Text = listViewList.Items[i].SubItems[1].Text;
+        }
+
+        //search
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            command = new SqlCommand("Select * from Table_Users Where username Like'%" + textBoxSearch.Text + "%' or fullname Like'%" + textBoxSearch.Text + "%'", connection);
+            SqlDataReader reader;
+
+            connection.Open();
+
+            reader = command.ExecuteReader();
+            command.Dispose();
+            listViewList.Items.Clear();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    ListViewItem item = new ListViewItem(reader[0].ToString()); // Or you can specify column name - ListViewItem item = new ListViewItem(reader["column_name"].ToString()); 
+                    item.SubItems.Add(reader[1].ToString());
+                    item.SubItems.Add(reader[2].ToString());
+                    item.SubItems.Add(reader[3].ToString());
+                    listViewList.Items.Add(item); // add this item to your ListView with all of his subitems
+                }
+            }
+            reader.Close();
+            connection.Close();
+        }
+
+        //Add
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            // check data
-            // username
-            if (string.IsNullOrEmpty(textBoxUsername.Text))
+            if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                if(dlr == DialogResult.OK) textBoxUsername.Focus();
-                return;
-            }
-
-            // password
-            if (string.IsNullOrEmpty(textBoxPassword.Text))
-            {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                if (dlr == DialogResult.OK) textBoxPassword.Focus();
-                return;
-            }
-
-            // fullname
-            if (string.IsNullOrEmpty(textBoxFullname.Text))
-            {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập họ tên!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                if (dlr == DialogResult.OK) textBoxFullname.Focus();
+                DialogResult dlr = MessageBox.Show("Vui lòng nhập tên khoa!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dlr == DialogResult.OK) textBoxName.Focus();
                 return;
             }
 
@@ -130,21 +143,19 @@ namespace UniversityManagementSystem
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String username = textBoxUsername.Text.Trim();
-                String password = textBoxPassword.Text.Trim();
-                String fullname = textBoxFullname.Text.Trim();
+                String khoa = textBoxName.Text.Trim();
 
                 // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM Table_Users WHERE username = '" + username + "'", connection);
+                command = new SqlCommand("SELECT * FROM Table_Khoa WHERE tenKhoa = N'" + khoa + "'", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     reader.Close();
-                    DialogResult dlr = MessageBox.Show("Tài khoản đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DialogResult dlr = MessageBox.Show("Đã có khoa này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     if (dlr == DialogResult.OK)
                     {
-                        textBoxUsername.Focus();
+                        textBoxName.Focus();
                     }
                 }
                 else
@@ -152,18 +163,16 @@ namespace UniversityManagementSystem
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO Table_Users VALUES(@fullname, @username, @password)";
+                    string query = @"INSERT INTO Table_Khoa VALUES(@khoa)";
                     command.CommandText = query;
-                    command.Parameters.AddWithValue("@fullname", fullname);
-                    command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@password", password);
+                    command.Parameters.AddWithValue("@khoa", khoa);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Tài khoản của bạn đã được tạo", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã thêm khoa " + khoa + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowList();
                     ResetTextBox();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Lỗi: ", ex.Message);
             }
@@ -173,11 +182,7 @@ namespace UniversityManagementSystem
             }
         }
 
-        private void listViewListUser_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
+        //Edit
         private void buttonEdit_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
@@ -188,10 +193,8 @@ namespace UniversityManagementSystem
                 }
 
                 String id = textBoxId.Text;
-                String username = textBoxUsername.Text;
-                String password = textBoxPassword.Text;
-                String fullname = textBoxFullname.Text;
-                String queryUpdate = "UPDATE Table_Users SET fullname = '" + fullname + "', username = '" + username + "', password = '" + password + "' WHERE id = '" + id + "'";
+                String khoa = textBoxName.Text;
+                String queryUpdate = "UPDATE Table_Khoa SET tenKhoa = N'" + khoa + "' WHERE id = " + id + "";
 
                 try
                 {
@@ -216,13 +219,12 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Vui lòng chọn Khoa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
 
-
-        //delete
+        //Delete
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
@@ -233,7 +235,7 @@ namespace UniversityManagementSystem
                 }
 
                 String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM Table_Users WHERE id = '" + id + "'";
+                String queryDelete = "DELETE FROM Table_Khoa WHERE id = '" + id + "'";
 
                 try
                 {
@@ -263,47 +265,18 @@ namespace UniversityManagementSystem
             }
         }
 
-        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        //Exit
+        private void buttonExit_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
-        private void buttonSearch_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            command = new SqlCommand("Select * from Table_Users Where username Like'%" + textBoxSearch.Text + "%' or fullname Like'%" + textBoxSearch.Text + "%'", connection);
-            SqlDataReader reader;
-
-            connection.Open();
-
-            reader = command.ExecuteReader();
-            command.Dispose();
-            listViewList.Items.Clear();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    ListViewItem item = new ListViewItem(reader[0].ToString()); // Or you can specify column name - ListViewItem item = new ListViewItem(reader["column_name"].ToString()); 
-                    item.SubItems.Add(reader[1].ToString());
-                    item.SubItems.Add(reader[2].ToString());
-                    item.SubItems.Add(reader[3].ToString());
-                    listViewList.Items.Add(item); // add this item to your ListView with all of his subitems
-                }
-            }
-            reader.Close();
-            connection.Close();
+            
         }
 
-        private void listViewList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // list users
-            int i = listViewList.FocusedItem.Index;
-            if (i < 0) return;
-            textBoxId.Text = listViewList.Items[i].Text;
-            textBoxUsername.Text = listViewList.Items[i].SubItems[2].Text;
-            textBoxPassword.Text = listViewList.Items[i].SubItems[3].Text;
-            textBoxFullname.Text = listViewList.Items[i].SubItems[1].Text;
-        }
-
+        //Clear
         private void buttonClear_Click(object sender, EventArgs e)
         {
             ResetTextBox();

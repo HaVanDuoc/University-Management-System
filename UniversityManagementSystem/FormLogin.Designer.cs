@@ -106,9 +106,9 @@
             this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.label2.Location = new System.Drawing.Point(339, 365);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(163, 23);
+            this.label2.Size = new System.Drawing.Size(173, 23);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Đăng ký tài khoản";
+            this.label2.Text = "Đăng ký tài khoản?";
             this.label2.Click += new System.EventHandler(this.labelRegister_Click);
             // 
             // FormLogin
@@ -116,7 +116,6 @@
             this.AcceptButton = this.buttonLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(514, 397);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBoxShowPassword);
@@ -125,6 +124,7 @@
             this.Controls.Add(this.textBoxUsername);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -34,7 +34,7 @@
             // 
             // buttonStart
             // 
-            this.buttonStart.AutoSize = true;
+            this.buttonStart.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonStart.BackColor = System.Drawing.Color.White;
             this.buttonStart.FlatAppearance.BorderColor = System.Drawing.SystemColors.HotTrack;
             this.buttonStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
@@ -62,8 +62,8 @@
             this.Name = "FormIndex";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "University Management System";
+            this.Load += new System.EventHandler(this.FormIndex_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

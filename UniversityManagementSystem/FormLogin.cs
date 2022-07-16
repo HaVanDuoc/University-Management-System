@@ -26,6 +26,17 @@ namespace UniversityManagementSystem
             }
         }
 
+        // Cancel Button
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
+
         private void Eixt(object sender, EventArgs e)
         {
             this.Close();
@@ -90,6 +101,16 @@ namespace UniversityManagementSystem
         {
             var form = new FormRegister();
             form.ShowDialog();
+        }
+
+        private void labelCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

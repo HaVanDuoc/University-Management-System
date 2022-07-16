@@ -24,5 +24,21 @@ namespace UniversityManagementSystem
             this.Hide();
             this.Show();
         }
+
+        private void FormIndex_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        // Cancel Button
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
     }
 }

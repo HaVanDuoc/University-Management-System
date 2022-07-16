@@ -82,7 +82,7 @@ namespace UniversityManagementSystem
 
         private void buttonManagementFaculty_Click(object sender, EventArgs e)
         {
-            var form = new FormManagementFaculty();
+            var form = new FormQLKhoa();
             this.Hide();
             form.ShowDialog();
             this.Show();

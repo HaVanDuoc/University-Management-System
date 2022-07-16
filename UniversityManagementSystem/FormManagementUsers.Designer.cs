@@ -52,6 +52,7 @@
             this.columnHeaderFullname = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderUsername = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderPassword = new System.Windows.Forms.ColumnHeader();
+            this.buttonClear = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -65,7 +66,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.IndianRed;
-            this.label1.Location = new System.Drawing.Point(424, 9);
+            this.label1.Location = new System.Drawing.Point(396, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(573, 45);
             this.label1.TabIndex = 0;
@@ -91,10 +92,10 @@
             this.buttonSearch.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonSearch.ForeColor = System.Drawing.SystemColors.ControlText;
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
-            this.buttonSearch.Location = new System.Drawing.Point(1026, 24);
+            this.buttonSearch.Location = new System.Drawing.Point(1041, 24);
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.buttonSearch.Size = new System.Drawing.Size(57, 59);
+            this.buttonSearch.Size = new System.Drawing.Size(201, 53);
             this.buttonSearch.TabIndex = 5;
             this.buttonSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonSearch.UseVisualStyleBackColor = true;
@@ -102,16 +103,17 @@
             // 
             // textBoxSearch
             // 
-            this.textBoxSearch.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxSearch.Location = new System.Drawing.Point(510, 39);
+            this.textBoxSearch.Font = new System.Drawing.Font("Times New Roman", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxSearch.Location = new System.Drawing.Point(399, 29);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.PlaceholderText = "Bạn đang tìm gì?";
-            this.textBoxSearch.Size = new System.Drawing.Size(501, 30);
+            this.textBoxSearch.Size = new System.Drawing.Size(636, 45);
             this.textBoxSearch.TabIndex = 0;
             this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.buttonClear);
             this.groupBox2.Controls.Add(this.textBoxId);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.textBoxFullname);
@@ -319,6 +321,22 @@
             this.columnHeaderPassword.Text = "Mật khẩu";
             this.columnHeaderPassword.Width = 200;
             // 
+            // buttonClear
+            // 
+            this.buttonClear.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonClear.Image = ((System.Drawing.Image)(resources.GetObject("buttonClear.Image")));
+            this.buttonClear.Location = new System.Drawing.Point(66, 426);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.buttonClear.Size = new System.Drawing.Size(235, 55);
+            this.buttonClear.TabIndex = 8;
+            this.buttonClear.Text = "Làm mới";
+            this.buttonClear.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonClear.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
             // FormManagementUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
@@ -370,5 +388,6 @@
         private ColumnHeader columnHeaderUsername;
         private TextBox textBoxId;
         private Label label5;
+        private Button buttonClear;
     }
 }
