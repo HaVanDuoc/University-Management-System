@@ -55,6 +55,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonQLDiemSV = new System.Windows.Forms.Button();
             this.buttonManagementFaculty = new System.Windows.Forms.Button();
             this.buttonManagementClassroom = new System.Windows.Forms.Button();
             this.buttonManagementSubjects = new System.Windows.Forms.Button();
@@ -284,6 +285,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.buttonQLDiemSV);
             this.groupBox2.Controls.Add(this.buttonManagementFaculty);
             this.groupBox2.Controls.Add(this.buttonManagementClassroom);
             this.groupBox2.Controls.Add(this.buttonManagementSubjects);
@@ -297,9 +299,18 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "MENU";
             // 
+            // buttonQLDiemSV
+            // 
+            this.buttonQLDiemSV.Location = new System.Drawing.Point(431, 58);
+            this.buttonQLDiemSV.Name = "buttonQLDiemSV";
+            this.buttonQLDiemSV.Size = new System.Drawing.Size(183, 76);
+            this.buttonQLDiemSV.TabIndex = 6;
+            this.buttonQLDiemSV.Text = "QL điểm Sinh Viên";
+            this.buttonQLDiemSV.UseVisualStyleBackColor = true;
+            // 
             // buttonManagementFaculty
             // 
-            this.buttonManagementFaculty.Location = new System.Drawing.Point(230, 165);
+            this.buttonManagementFaculty.Location = new System.Drawing.Point(431, 165);
             this.buttonManagementFaculty.Name = "buttonManagementFaculty";
             this.buttonManagementFaculty.Size = new System.Drawing.Size(183, 76);
             this.buttonManagementFaculty.TabIndex = 5;
@@ -309,16 +320,17 @@
             // 
             // buttonManagementClassroom
             // 
-            this.buttonManagementClassroom.Location = new System.Drawing.Point(31, 165);
+            this.buttonManagementClassroom.Location = new System.Drawing.Point(230, 165);
             this.buttonManagementClassroom.Name = "buttonManagementClassroom";
             this.buttonManagementClassroom.Size = new System.Drawing.Size(183, 76);
             this.buttonManagementClassroom.TabIndex = 4;
             this.buttonManagementClassroom.Text = "QL Lớp học";
             this.buttonManagementClassroom.UseVisualStyleBackColor = true;
+            this.buttonManagementClassroom.Click += new System.EventHandler(this.buttonManagementClassroom_Click);
             // 
             // buttonManagementSubjects
             // 
-            this.buttonManagementSubjects.Location = new System.Drawing.Point(636, 58);
+            this.buttonManagementSubjects.Location = new System.Drawing.Point(31, 165);
             this.buttonManagementSubjects.Name = "buttonManagementSubjects";
             this.buttonManagementSubjects.Size = new System.Drawing.Size(183, 76);
             this.buttonManagementSubjects.TabIndex = 3;
@@ -327,7 +339,7 @@
             // 
             // buttonManagementLecturers
             // 
-            this.buttonManagementLecturers.Location = new System.Drawing.Point(431, 58);
+            this.buttonManagementLecturers.Location = new System.Drawing.Point(644, 58);
             this.buttonManagementLecturers.Name = "buttonManagementLecturers";
             this.buttonManagementLecturers.Size = new System.Drawing.Size(183, 76);
             this.buttonManagementLecturers.TabIndex = 2;
@@ -352,6 +364,7 @@
             this.buttonManagementStudents.TabIndex = 0;
             this.buttonManagementStudents.Text = "QL Sinh Viên";
             this.buttonManagementStudents.UseVisualStyleBackColor = true;
+            this.buttonManagementStudents.Click += new System.EventHandler(this.buttonManagementStudents_Click);
             // 
             // FormManager
             // 
@@ -416,5 +429,6 @@
         private Button buttonManagementLecturers;
         private Button buttonManagementUsers;
         private Button buttonManagementStudents;
+        private Button buttonQLDiemSV;
     }
 }

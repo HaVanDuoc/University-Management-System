@@ -97,5 +97,21 @@ namespace UniversityManagementSystem
                 this.Close();
             }
         }
+
+        private void buttonManagementClassroom_Click(object sender, EventArgs e)
+        {
+            var form = new FormQLLop();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
+        }
+
+        private void buttonManagementStudents_Click(object sender, EventArgs e)
+        {
+            var form = new FormQLSinhVien();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
+        }
     }
 }

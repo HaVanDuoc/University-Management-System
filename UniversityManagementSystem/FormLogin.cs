@@ -60,7 +60,23 @@ namespace UniversityManagementSystem
             string username = textBoxUsername.Text;
             string password = textBoxPassword.Text;
 
-            if(connection.State == System.Data.ConnectionState.Closed)
+            // username
+            if (string.IsNullOrEmpty(username))
+            {
+                DialogResult dlr = MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dlr == DialogResult.OK) textBoxUsername.Focus();
+                return;
+            }
+
+            // password
+            if (string.IsNullOrEmpty(password))
+            {
+                DialogResult dlr = MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dlr == DialogResult.OK) textBoxPassword.Focus();
+                return;
+            }
+
+            if (connection.State == System.Data.ConnectionState.Closed)
             {
                 connection.Open();
             }
@@ -72,11 +88,7 @@ namespace UniversityManagementSystem
 
             if (reader.Read())
             {
-                // lưu username
-                //int usernameIndex = reader.GetOrdinal("username");
-                //username = reader.GetString(usernameIndex);
                 logged = reader["username"].ToString();
-
                 var form = new FormManager();
                 this.Hide();
                 form.ShowDialog();
@@ -85,7 +97,11 @@ namespace UniversityManagementSystem
             else
             {
                 DialogResult dlr = MessageBox.Show("Tên đăng nhập hoặc mật khẩu không chính xác!", "Thông báo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
-                if(dlr == DialogResult.Cancel)
+                if (dlr == DialogResult.Retry)
+                {
+                    textBoxUsername.Focus();
+                }
+                if (dlr == DialogResult.Cancel)
                 {
                     this.Close();
                 }

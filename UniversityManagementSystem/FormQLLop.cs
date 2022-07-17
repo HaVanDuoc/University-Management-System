@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 
-
 namespace UniversityManagementSystem
 {
-    public partial class FormQLKhoa : Form
+    public partial class FormQLLop : Form
     {
-        public FormQLKhoa()
+        public FormQLLop()
         {
             InitializeComponent();
         }
@@ -55,7 +54,7 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = "SELECT * FROM Table_SinhVien";
+            String query = "SELECT * FROM Table_LopHoc";
 
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
@@ -76,10 +75,19 @@ namespace UniversityManagementSystem
         {
             textBoxId.Text = "";
             textBoxName.Text = "";
+            comboBoxDiaChi.SelectedIndex = 0;
             textBoxName.Focus();
         }
 
-        private void FormQLKhoa_Load(object sender, EventArgs e)
+        // Tải ComboBox Cơ sở
+        private void LoadComboBoxAddressClassroom()
+        {
+            comboBoxDiaChi.Items.Add("Cơ sở 624 Âu Cơ");
+            comboBoxDiaChi.Items.Add("Cơ sở 613 Âu Cơ");
+            comboBoxDiaChi.SelectedIndex = 0;
+        }
+
+        private void FormQLLop_Load(object sender, EventArgs e)
         {
             try
             {
@@ -91,48 +99,24 @@ namespace UniversityManagementSystem
             {
                 MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            LoadComboBoxAddressClassroom();
         }
 
-        //list view
         private void listViewList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Danh sách Khoa
             int i = listViewList.FocusedItem.Index;
             if (i < 0) return;
             textBoxId.Text = listViewList.Items[i].Text;
             textBoxName.Text = listViewList.Items[i].SubItems[1].Text;
+            comboBoxDiaChi.Text = listViewList.Items[i].SubItems[2].Text;
         }
 
-        //search
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
-            String searchData = textBoxSearch.Text;
-            String searchQuery = "Select * from Table_Khoa Where tenKhoa Like N'%" + searchData + "%'";
-            command = new SqlCommand(searchQuery, connection);
-            SqlDataReader reader;
-            connection.Open();
-            reader = command.ExecuteReader();
-            command.Dispose();
-            listViewList.Items.Clear();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    ListViewItem item = new ListViewItem(reader[0].ToString());
-                    item.SubItems.Add(reader[1].ToString());
-                    listViewList.Items.Add(item);
-                }
-            }
-            reader.Close();
-            connection.Close();
-        }
-
-        //Add
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập tên khoa!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                DialogResult dlr = MessageBox.Show("Vui lòng nhập mã lớp!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxName.Focus();
                 return;
             }
@@ -141,16 +125,17 @@ namespace UniversityManagementSystem
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String khoa = textBoxName.Text.Trim();
+                String malop = textBoxName.Text.Trim();
+                String coso = comboBoxDiaChi.Text.Trim();
 
                 // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM Table_Khoa WHERE tenKhoa = N'" + khoa + "'", connection);
+                command = new SqlCommand("SELECT * FROM Table_LopHoc WHERE tenLop = N'" + malop + "'", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     reader.Close();
-                    DialogResult dlr = MessageBox.Show("Đã có khoa này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DialogResult dlr = MessageBox.Show("Mã lớp này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     if (dlr == DialogResult.OK)
                     {
                         textBoxName.Focus();
@@ -161,11 +146,12 @@ namespace UniversityManagementSystem
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO Table_Khoa VALUES(@khoa)";
+                    string query = @"INSERT INTO Table_LopHoc VALUES(@lop, @coso)";
                     command.CommandText = query;
-                    command.Parameters.AddWithValue("@khoa", khoa);
+                    command.Parameters.AddWithValue("@lop", malop);
+                    command.Parameters.AddWithValue("@coso", coso);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Đã thêm khoa " + khoa + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã thêm lớp " + malop + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowList();
                     ResetTextBox();
                 }
@@ -180,7 +166,6 @@ namespace UniversityManagementSystem
             }
         }
 
-        //Edit
         private void buttonEdit_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
@@ -191,8 +176,9 @@ namespace UniversityManagementSystem
                 }
 
                 String id = textBoxId.Text;
-                String khoa = textBoxName.Text;
-                String queryUpdate = "UPDATE Table_Khoa SET tenKhoa = N'" + khoa + "' WHERE id = " + id + "";
+                String malop = textBoxName.Text;
+                String coso = comboBoxDiaChi.Text;
+                String queryUpdate = "UPDATE Table_LopHoc SET tenLop = N'" + malop + "', diaChiLop = N'" + coso + "' WHERE id = " + id + "";
 
                 try
                 {
@@ -217,12 +203,11 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn Khoa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Vui lòng chọn Lớp học!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
 
-        //Delete
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
@@ -233,7 +218,7 @@ namespace UniversityManagementSystem
                 }
 
                 String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM Table_Khoa WHERE id = '" + id + "'";
+                String queryDelete = "DELETE FROM Table_LopHoc WHERE id = '" + id + "'";
 
                 try
                 {
@@ -258,26 +243,43 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn Lớp học!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
         }
 
-        //Exit
         private void buttonExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        //Clear
         private void buttonClear_Click(object sender, EventArgs e)
         {
             ResetTextBox();
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            String searchData = textBoxSearch.Text;
+            String searchQuery = "Select * from Table_LopHoc Where tenLop Like N'%" + searchData + "%' or diaChiLop Like N'%" + searchData + "%' ";
+            command = new SqlCommand(searchQuery, connection);
+            SqlDataReader reader;
+            connection.Open();
+            reader = command.ExecuteReader();
+            command.Dispose();
+            listViewList.Items.Clear();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    ListViewItem item = new ListViewItem(reader[0].ToString());
+                    item.SubItems.Add(reader[1].ToString());
+                    item.SubItems.Add(reader[2].ToString());
+                    listViewList.Items.Add(item);
+                }
+            }
+            reader.Close();
+            connection.Close();
         }
     }
 }
