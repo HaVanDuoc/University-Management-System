@@ -78,6 +78,8 @@ namespace UniversityManagementSystem
             textBoxName.Text = "";
             checkBoxNam.Checked = false;
             checkBoxNu.Checked = false;
+            dateTimePickerNgaySinh.Value = DateTime.Now;
+            comboBoxKhoa.SelectedIndex = 0;
             textBoxNoiSinh.Text = "";
             textBoxDanToc.Text = "";
             textBoxMSSV.Focus();
@@ -148,11 +150,102 @@ namespace UniversityManagementSystem
             textBoxId.Text = listViewList.Items[i].Text;
             textBoxMSSV.Text = listViewList.Items[i].SubItems[1].Text;
             textBoxName.Text = listViewList.Items[i].SubItems[2].Text;
+
+            if (listViewList.Items[i].SubItems[3].Text == "Nam")
+            {
+                checkBoxNam.Checked = true;
+            }
+            else if(listViewList.Items[i].SubItems[3].Text == "Nữ")
+            {
+                checkBoxNu.Checked = true;
+            }
+            else
+            {
+                checkBoxNam.Checked = false;
+                checkBoxNu.Checked = false;
+            }
+
+            string ngaysinh = listViewList.Items[i].SubItems[4].Text;
+            dateTimePickerNgaySinh.Value = DateTime.ParseExact(ngaysinh, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+            string selectComboBox = listViewList.Items[i].SubItems[5].Text;
+            comboBoxKhoa.SelectedIndex = comboBoxKhoa.FindStringExact(selectComboBox);
+
+            textBoxNoiSinh.Text = listViewList.Items[i].SubItems[6].Text;
+            textBoxDanToc.Text = listViewList.Items[i].SubItems[7].Text;
+
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(textBoxId.Text))
+            {
+                if (connection.State == ConnectionState.Closed) connection.Open();
 
+                String gioitinh = "Chưa xác định";
+                if (checkBoxNam.Checked == true) gioitinh = "Nam";
+                if (checkBoxNu.Checked == true) gioitinh = "Nữ";
+
+                String id = textBoxId.Text.Trim();
+                String mssv = textBoxMSSV.Text.Trim();
+                String hoten = textBoxName.Text.Trim();
+                String ngaysinh = dateTimePickerNgaySinh.Value.ToString("dd-MM-yyyy");
+                String khoa = comboBoxKhoa.Text.Trim();
+                String noisinh = textBoxNoiSinh.Text.Trim();
+                String dantoc = textBoxDanToc.Text.Trim();
+
+                try
+                {
+                    if (connection.State == ConnectionState.Closed) connection.Open();
+
+                    // Kiểm tra tài khoản đã tồn tại hay chưa
+                    command = new SqlCommand("SELECT * FROM Table_SinhVien WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ", connection);
+                    reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        reader.Close();
+                        DialogResult dlr = MessageBox.Show("Mã sinh viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        if (dlr == DialogResult.OK)
+                        {
+                            textBoxId.Focus();
+                        }
+                    }
+                    else
+                    {
+                        reader.Close();
+                        command = new SqlCommand();
+                        command.Connection = connection;
+                        string query = @"UPDATE Table_SinhVien SET mssv = @mssv, hoTen = @hoten, gioiTinh = @gioitinh, ngaySinh = @ngaysinh, noiSinh = @noisinh, danToc = @dantoc, khoa = @khoa WHERE id = @id ";
+                        command.CommandText = query;
+                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@mssv", mssv);
+                        command.Parameters.AddWithValue("@hoten", hoten);
+                        command.Parameters.AddWithValue("@gioitinh", gioitinh);
+                        command.Parameters.AddWithValue("@ngaysinh", ngaysinh);
+                        command.Parameters.AddWithValue("@noisinh", noisinh);
+                        command.Parameters.AddWithValue("@dantoc", dantoc);
+                        command.Parameters.AddWithValue("@khoa", khoa);
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ShowList();
+                        ResetTextBox();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi: ", ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn Sinh viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -178,19 +271,20 @@ namespace UniversityManagementSystem
             if(checkBoxNam.Checked == true) gioitinh = "Nam";
             if(checkBoxNu.Checked == true) gioitinh = "Nữ";
 
+            String id = textBoxId.Text.Trim();
             String mssv = textBoxMSSV.Text.Trim();
             String hoten = textBoxName.Text.Trim();
-            String ngaysinh = dateTimePickerNgaySinh.Value.ToString();
+            String ngaysinh = dateTimePickerNgaySinh.Value.ToString("dd-MM-yyyy");
             String noisinh = textBoxNoiSinh.Text.Trim();
             String dantoc = textBoxDanToc.Text.Trim();
-
+            String khoa = comboBoxKhoa.Text.Trim();
 
             try
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
                 // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM Table_SinhVien WHERE mssv = N'" + mssv + "'", connection);
+                command = new SqlCommand("SELECT * FROM Table_SinhVien WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
@@ -207,7 +301,7 @@ namespace UniversityManagementSystem
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO Table_SinhVien (mssv, hoTen, gioiTinh, ngaySinh, noiSinh, danToc) VALUES(@mssv, @hoten, @gioitinh, @ngaysinh, @noisinh, @dantoc)";
+                    string query = @"INSERT INTO Table_SinhVien (mssv, hoTen, gioiTinh, ngaySinh, noiSinh, danToc, khoa) VALUES(@mssv, @hoten, @gioitinh, @ngaysinh, @noisinh, @dantoc, @khoa)";
                     command.CommandText = query;
                     command.Parameters.AddWithValue("@mssv", mssv);
                     command.Parameters.AddWithValue("@hoten", hoten);
@@ -215,6 +309,7 @@ namespace UniversityManagementSystem
                     command.Parameters.AddWithValue("@ngaysinh", ngaysinh);
                     command.Parameters.AddWithValue("@noisinh", noisinh);
                     command.Parameters.AddWithValue("@dantoc", dantoc);
+                    command.Parameters.AddWithValue("@khoa", khoa);
                     command.ExecuteNonQuery();
                     MessageBox.Show("Đã thêm sinh viên " + hoten + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowList();
@@ -243,7 +338,7 @@ namespace UniversityManagementSystem
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-
+            ResetTextBox();
         }
     }
 }
