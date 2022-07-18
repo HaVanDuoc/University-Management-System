@@ -18,6 +18,7 @@ namespace UniversityManagementSystem
         private SqlDataAdapter dataAdapter;
         private DataSet dataSet;
         private SqlDataReader reader;
+        String table = GloabalVariables.tableNguoiDung;
 
         // Đọc danh sách
         DataTable ReadList(String query)
@@ -49,7 +50,8 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = "SELECT * FROM Table_Users";
+            String tableName = GloabalVariables.tableNguoiDung;
+            String query = "SELECT * FROM " + GloabalVariables.tableNguoiDung + " ";
 
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
@@ -66,7 +68,7 @@ namespace UniversityManagementSystem
         }
 
         // Reset textbox
-        private void ResetTextBox()
+        private void Clear()
         {
             textBoxId.Text = "";
             textBoxUsername.Text = "";
@@ -89,13 +91,14 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
                 ShowList();
             }
             catch
             {
                 MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 
@@ -135,7 +138,7 @@ namespace UniversityManagementSystem
                 String fullname = textBoxFullname.Text.Trim();
 
                 // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM Table_Users WHERE username = '" + username + "'", connection);
+                command = new SqlCommand("SELECT * FROM " + table + " WHERE username = '" + username + "'", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
@@ -152,7 +155,7 @@ namespace UniversityManagementSystem
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO Table_Users VALUES(@fullname, @username, @password)";
+                    string query = @"INSERT INTO "+table+" VALUES(@fullname, @username, @password)";
                     command.CommandText = query;
                     command.Parameters.AddWithValue("@fullname", fullname);
                     command.Parameters.AddWithValue("@username", username);
@@ -160,7 +163,7 @@ namespace UniversityManagementSystem
                     command.ExecuteNonQuery();
                     MessageBox.Show("Tài khoản của bạn đã được tạo", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowList();
-                    ResetTextBox();
+                    Clear();
                 }
             }
             catch(Exception ex)
@@ -191,7 +194,7 @@ namespace UniversityManagementSystem
                 String username = textBoxUsername.Text;
                 String password = textBoxPassword.Text;
                 String fullname = textBoxFullname.Text;
-                String queryUpdate = "UPDATE Table_Users SET fullname = '" + fullname + "', username = '" + username + "', password = '" + password + "' WHERE id = '" + id + "'";
+                String queryUpdate = "UPDATE " + table + " SET fullname = N'" + fullname + "', username = N'" + username + "', password = '" + password + "' WHERE id = '" + id + "'";
 
                 try
                 {
@@ -202,7 +205,7 @@ namespace UniversityManagementSystem
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
-                        ResetTextBox();
+                        Clear();
                     }
                 }
                 catch (Exception ex)
@@ -233,7 +236,7 @@ namespace UniversityManagementSystem
                 }
 
                 String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM Table_Users WHERE id = '" + id + "'";
+                String queryDelete = "DELETE FROM " + table + " WHERE id = '" + id + "'";
 
                 try
                 {
@@ -244,7 +247,7 @@ namespace UniversityManagementSystem
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
-                        ResetTextBox();
+                        Clear();
                     }
                 }
                 catch (Exception ex)
@@ -270,7 +273,7 @@ namespace UniversityManagementSystem
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            command = new SqlCommand("Select * from Table_Users Where username Like'%" + textBoxSearch.Text + "%' or fullname Like'%" + textBoxSearch.Text + "%'", connection);
+            command = new SqlCommand("Select * from " + table + " Where username Like'%" + textBoxSearch.Text + "%' or fullname Like'%" + textBoxSearch.Text + "%'", connection);
             SqlDataReader reader;
 
             connection.Open();
@@ -306,7 +309,7 @@ namespace UniversityManagementSystem
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            ResetTextBox();
+            Clear();
         }
     }
 }

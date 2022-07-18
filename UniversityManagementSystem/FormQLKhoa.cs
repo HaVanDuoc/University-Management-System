@@ -24,6 +24,18 @@ namespace UniversityManagementSystem
         private SqlDataAdapter dataAdapter;
         private DataSet dataSet;
         private SqlDataReader reader;
+        private String table = GloabalVariables.tableKhoa;
+
+        // Cancel Button
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
 
         // Đọc danh sách
         DataTable ReadList(String query)
@@ -55,7 +67,7 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = "SELECT * FROM Table_SinhVien";
+            String query = "SELECT * FROM "+table+" ";
 
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
@@ -72,7 +84,7 @@ namespace UniversityManagementSystem
         }
 
         // Reset textbox
-        private void ResetTextBox()
+        private void Clear()
         {
             textBoxId.Text = "";
             textBoxName.Text = "";
@@ -83,13 +95,14 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
                 ShowList();
             }
             catch
             {
                 MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 
@@ -107,7 +120,7 @@ namespace UniversityManagementSystem
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             String searchData = textBoxSearch.Text;
-            String searchQuery = "Select * from Table_Khoa Where tenKhoa Like N'%" + searchData + "%'";
+            String searchQuery = "Select * from " + table + " Where tenKhoa Like N'%" + searchData + "%'";
             command = new SqlCommand(searchQuery, connection);
             SqlDataReader reader;
             connection.Open();
@@ -144,7 +157,7 @@ namespace UniversityManagementSystem
                 String khoa = textBoxName.Text.Trim();
 
                 // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM Table_Khoa WHERE tenKhoa = N'" + khoa + "'", connection);
+                command = new SqlCommand("SELECT * FROM " + table + " WHERE tenKhoa = N'" + khoa + "'", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
@@ -161,13 +174,13 @@ namespace UniversityManagementSystem
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO Table_Khoa VALUES(@khoa)";
+                    string query = @"INSERT INTO " + table + " VALUES(@khoa)";
                     command.CommandText = query;
                     command.Parameters.AddWithValue("@khoa", khoa);
                     command.ExecuteNonQuery();
                     MessageBox.Show("Đã thêm khoa " + khoa + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowList();
-                    ResetTextBox();
+                    Clear();
                 }
             }
             catch (Exception ex)
@@ -192,7 +205,7 @@ namespace UniversityManagementSystem
 
                 String id = textBoxId.Text;
                 String khoa = textBoxName.Text;
-                String queryUpdate = "UPDATE Table_Khoa SET tenKhoa = N'" + khoa + "' WHERE id = " + id + "";
+                String queryUpdate = "UPDATE " + table + " SET tenKhoa = N'" + khoa + "' WHERE id = " + id + "";
 
                 try
                 {
@@ -203,7 +216,7 @@ namespace UniversityManagementSystem
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
-                        ResetTextBox();
+                        Clear();
                     }
                 }
                 catch (Exception ex)
@@ -233,7 +246,7 @@ namespace UniversityManagementSystem
                 }
 
                 String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM Table_Khoa WHERE id = '" + id + "'";
+                String queryDelete = "DELETE FROM " + table + " WHERE id = '" + id + "'";
 
                 try
                 {
@@ -244,7 +257,7 @@ namespace UniversityManagementSystem
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
-                        ResetTextBox();
+                        Clear();
                     }
                 }
                 catch (Exception ex)
@@ -258,7 +271,7 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn người Khoa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
         }
@@ -277,7 +290,7 @@ namespace UniversityManagementSystem
         //Clear
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            ResetTextBox();
+            Clear();
         }
     }
 }

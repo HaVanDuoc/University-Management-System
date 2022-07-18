@@ -23,6 +23,18 @@ namespace UniversityManagementSystem
         private SqlDataAdapter dataAdapter;
         private DataSet dataSet;
         private SqlDataReader reader;
+        String table = GloabalVariables.tableSinhVien;
+
+        // Cancel Button
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
 
         // Đọc danh sách
         DataTable ReadList(String query)
@@ -54,7 +66,7 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = "SELECT * FROM Table_SinhVien";
+            String query = "SELECT SinhVien.id, mssv, hoTen, gioiTinh, ngaySinh, Khoa.tenKhoa, noiSinh, danToc FROM SinhVien LEFT JOIN Khoa ON SinhVien.khoa_id = Khoa.id ";
 
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
@@ -71,7 +83,7 @@ namespace UniversityManagementSystem
         }
 
         // Reset textbox
-        private void ResetTextBox()
+        private void Clear()
         {
             textBoxId.Text = "";
             textBoxMSSV.Text = "";
@@ -88,7 +100,7 @@ namespace UniversityManagementSystem
         private void LoadComboBoxKhoa()
         {
             if(connection.State == System.Data.ConnectionState.Closed) connection.Open();
-            String query = "SELECT * FROM Table_Khoa";
+            String query = "SELECT * FROM "+ GloabalVariables.tableKhoa + " ";
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
@@ -104,7 +116,7 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
                 LoadComboBoxKhoa();
                 ShowList();
@@ -112,35 +124,24 @@ namespace UniversityManagementSystem
             catch
             {
                 MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             String searchData = textBoxSearch.Text;
-            String searchQuery = "Select * from Table_SinhVien Where mssv Like N'%" + searchData + "%' or hoTen Like N'%" + searchData + "%' or gioiTinh Like N'%" + searchData + "%' or ngaySinh Like N'%" + searchData + "%' or noiSinh Like N'%" + searchData + "%' or danToc Like N'%" + searchData + "%' or khoa Like N'%" + searchData + "%'";
+            String searchQuery = "Select SinhVien.id, mssv, hoTen, gioiTinh, ngaySinh, Khoa.tenKhoa, noiSinh, danToc from SinhVien LEFT JOIN Khoa ON SinhVien.khoa_id = Khoa.id Where mssv Like N'%" + searchData + "%' or hoTen Like N'%" + searchData + "%' or gioiTinh Like N'%" + searchData + "%' or ngaySinh Like N'%" + searchData + "%' or noiSinh Like N'%" + searchData + "%' or danToc Like N'%" + searchData + "%' or Khoa.tenKhoa Like N'%" + searchData + "%'";
             command = new SqlCommand(searchQuery, connection);
-            SqlDataReader reader;
-            connection.Open();
-            reader = command.ExecuteReader();
-            command.Dispose();
-            listViewList.Items.Clear();
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    ListViewItem item = new ListViewItem(reader["mssv"].ToString());
-                    item.SubItems.Add(reader["hoTen"].ToString());
-                    item.SubItems.Add(reader["gioiTinh"].ToString());
-                    item.SubItems.Add(reader["ngaySinh"].ToString());
-                    item.SubItems.Add(reader["noiSinh"].ToString());
-                    item.SubItems.Add(reader["danToc"].ToString());
-                    item.SubItems.Add(reader["khoa"].ToString());
-                    listViewList.Items.Add(item);
-                }
-            }
-            reader.Close();
-            connection.Close();
+            dataAdapter = new SqlDataAdapter();
+            dataAdapter.SelectCommand = command;
+            dataSet = new DataSet();
+            dataAdapter.Fill(dataSet, "table");
+
+            // Load listView
+            DataTable dataTable;
+            dataTable = ReadList(searchQuery);
+            LoadList(dataTable);
         }
 
         private void listViewList_SelectedIndexChanged(object sender, EventArgs e)
@@ -199,7 +200,7 @@ namespace UniversityManagementSystem
                     if (connection.State == ConnectionState.Closed) connection.Open();
 
                     // Kiểm tra tài khoản đã tồn tại hay chưa
-                    command = new SqlCommand("SELECT * FROM Table_SinhVien WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ", connection);
+                    command = new SqlCommand("SELECT * FROM " + table + " WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ", connection);
                     reader = command.ExecuteReader();
 
                     if (reader.Read())
@@ -216,20 +217,12 @@ namespace UniversityManagementSystem
                         reader.Close();
                         command = new SqlCommand();
                         command.Connection = connection;
-                        string query = @"UPDATE Table_SinhVien SET mssv = @mssv, hoTen = @hoten, gioiTinh = @gioitinh, ngaySinh = @ngaysinh, noiSinh = @noisinh, danToc = @dantoc, khoa = @khoa WHERE id = @id ";
+                        string query = @"update SinhVien set mssv = N'"+mssv+"', hoTen = N'"+hoten+"', gioiTinh = N'"+gioitinh+"', ngaySinh = N'"+ngaysinh+"',  noiSinh = N'"+noisinh+"', danToc = N'"+dantoc+"', khoa_id = Khoa.id from Khoa inner join SinhVien on Khoa.tenKhoa = N'"+khoa+"' where SinhVien.id = '"+id+"';";
                         command.CommandText = query;
-                        command.Parameters.AddWithValue("@id", id);
-                        command.Parameters.AddWithValue("@mssv", mssv);
-                        command.Parameters.AddWithValue("@hoten", hoten);
-                        command.Parameters.AddWithValue("@gioitinh", gioitinh);
-                        command.Parameters.AddWithValue("@ngaysinh", ngaysinh);
-                        command.Parameters.AddWithValue("@noisinh", noisinh);
-                        command.Parameters.AddWithValue("@dantoc", dantoc);
-                        command.Parameters.AddWithValue("@khoa", khoa);
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
-                        ResetTextBox();
+                        Clear();
                     }
                 }
                 catch (Exception ex)
@@ -284,7 +277,7 @@ namespace UniversityManagementSystem
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
                 // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM Table_SinhVien WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ", connection);
+                command = new SqlCommand("SELECT * FROM " + table + " WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
@@ -301,19 +294,17 @@ namespace UniversityManagementSystem
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO Table_SinhVien (mssv, hoTen, gioiTinh, ngaySinh, noiSinh, danToc, khoa) VALUES(@mssv, @hoten, @gioitinh, @ngaysinh, @noisinh, @dantoc, @khoa)";
+
+                    String query = "insert into SinhVien(mssv, hoTen, gioiTinh, ngaySinh, noiSinh, danToc, khoa_id) " +
+                        "select N'"+mssv+"', N'"+hoten+"', N'"+gioitinh+"', N'"+ngaysinh+"', N'"+noisinh+"', N'"+dantoc+"', " +
+                        "Khoa.id from Khoa Where Khoa.tenKhoa = N'"+khoa+"'";
+
                     command.CommandText = query;
-                    command.Parameters.AddWithValue("@mssv", mssv);
-                    command.Parameters.AddWithValue("@hoten", hoten);
-                    command.Parameters.AddWithValue("@gioitinh", gioitinh);
-                    command.Parameters.AddWithValue("@ngaysinh", ngaysinh);
-                    command.Parameters.AddWithValue("@noisinh", noisinh);
-                    command.Parameters.AddWithValue("@dantoc", dantoc);
-                    command.Parameters.AddWithValue("@khoa", khoa);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Đã thêm sinh viên " + hoten + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã thêm sinh viên " + hoten + "!", "Thông báo", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                     ShowList();
-                    ResetTextBox();
+                    Clear();
                 }
             }
             catch (Exception ex)
@@ -328,17 +319,52 @@ namespace UniversityManagementSystem
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(textBoxId.Text))
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
+                String id = textBoxId.Text;
+                String queryDelete = "DELETE FROM " + table + " WHERE id = '" + id + "'";
+
+                try
+                {
+                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dlr == DialogResult.Yes)
+                    {
+                        command = new SqlCommand(queryDelete, connection);
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ShowList();
+                        Clear();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi: " + ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn Sinh viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            ResetTextBox();
+            Clear();
         }
     }
 }

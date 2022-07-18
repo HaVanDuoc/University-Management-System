@@ -7,7 +7,7 @@ namespace UniversityManagementSystem
         SqlConnection connection;
         SqlCommand command;
         SqlDataReader reader;
-        public static string logged;
+
         public FormLogin()
         {
             InitializeComponent();
@@ -17,12 +17,13 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
             }
             catch
             {
                 MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 
@@ -83,12 +84,12 @@ namespace UniversityManagementSystem
 
             command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT * FROM Table_Users WHERE username='" + username + "' AND password='" + password + "'";
+            command.CommandText = "SELECT * FROM " + GloabalVariables.tableNguoiDung + " WHERE username='" + username + "' AND password='" + password + "'";
             reader = command.ExecuteReader();
 
             if (reader.Read())
             {
-                logged = reader["username"].ToString();
+                GloabalVariables.logged = reader["username"].ToString();
                 var form = new FormManager();
                 this.Hide();
                 form.ShowDialog();

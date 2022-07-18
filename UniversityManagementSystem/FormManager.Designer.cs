@@ -56,12 +56,12 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonQLDiemSV = new System.Windows.Forms.Button();
-            this.buttonManagementFaculty = new System.Windows.Forms.Button();
-            this.buttonManagementClassroom = new System.Windows.Forms.Button();
-            this.buttonManagementSubjects = new System.Windows.Forms.Button();
-            this.buttonManagementLecturers = new System.Windows.Forms.Button();
-            this.buttonManagementUsers = new System.Windows.Forms.Button();
-            this.buttonManagementStudents = new System.Windows.Forms.Button();
+            this.buttonQLKhoa = new System.Windows.Forms.Button();
+            this.buttonQLLopHoc = new System.Windows.Forms.Button();
+            this.buttonQLMonHoc = new System.Windows.Forms.Button();
+            this.buttonQLGiangVien = new System.Windows.Forms.Button();
+            this.buttonQLNguoiDung = new System.Windows.Forms.Button();
+            this.buttonQLSinhVien = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -215,7 +215,7 @@
             // labelPassword
             // 
             this.labelPassword.AutoSize = true;
-            this.labelPassword.Location = new System.Drawing.Point(159, 440);
+            this.labelPassword.Location = new System.Drawing.Point(165, 440);
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(0, 22);
             this.labelPassword.TabIndex = 6;
@@ -286,12 +286,12 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.buttonQLDiemSV);
-            this.groupBox2.Controls.Add(this.buttonManagementFaculty);
-            this.groupBox2.Controls.Add(this.buttonManagementClassroom);
-            this.groupBox2.Controls.Add(this.buttonManagementSubjects);
-            this.groupBox2.Controls.Add(this.buttonManagementLecturers);
-            this.groupBox2.Controls.Add(this.buttonManagementUsers);
-            this.groupBox2.Controls.Add(this.buttonManagementStudents);
+            this.groupBox2.Controls.Add(this.buttonQLKhoa);
+            this.groupBox2.Controls.Add(this.buttonQLLopHoc);
+            this.groupBox2.Controls.Add(this.buttonQLMonHoc);
+            this.groupBox2.Controls.Add(this.buttonQLGiangVien);
+            this.groupBox2.Controls.Add(this.buttonQLNguoiDung);
+            this.groupBox2.Controls.Add(this.buttonQLSinhVien);
             this.groupBox2.Location = new System.Drawing.Point(379, 328);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(891, 313);
@@ -307,64 +307,67 @@
             this.buttonQLDiemSV.TabIndex = 6;
             this.buttonQLDiemSV.Text = "QL điểm Sinh Viên";
             this.buttonQLDiemSV.UseVisualStyleBackColor = true;
+            this.buttonQLDiemSV.Click += new System.EventHandler(this.buttonQLDiemSV_Click);
             // 
-            // buttonManagementFaculty
+            // buttonQLKhoa
             // 
-            this.buttonManagementFaculty.Location = new System.Drawing.Point(431, 165);
-            this.buttonManagementFaculty.Name = "buttonManagementFaculty";
-            this.buttonManagementFaculty.Size = new System.Drawing.Size(183, 76);
-            this.buttonManagementFaculty.TabIndex = 5;
-            this.buttonManagementFaculty.Text = "QL Khoa";
-            this.buttonManagementFaculty.UseVisualStyleBackColor = true;
-            this.buttonManagementFaculty.Click += new System.EventHandler(this.buttonManagementFaculty_Click);
+            this.buttonQLKhoa.Location = new System.Drawing.Point(431, 165);
+            this.buttonQLKhoa.Name = "buttonQLKhoa";
+            this.buttonQLKhoa.Size = new System.Drawing.Size(183, 76);
+            this.buttonQLKhoa.TabIndex = 5;
+            this.buttonQLKhoa.Text = "QL Khoa";
+            this.buttonQLKhoa.UseVisualStyleBackColor = true;
+            this.buttonQLKhoa.Click += new System.EventHandler(this.buttonManagementFaculty_Click);
             // 
-            // buttonManagementClassroom
+            // buttonQLLopHoc
             // 
-            this.buttonManagementClassroom.Location = new System.Drawing.Point(230, 165);
-            this.buttonManagementClassroom.Name = "buttonManagementClassroom";
-            this.buttonManagementClassroom.Size = new System.Drawing.Size(183, 76);
-            this.buttonManagementClassroom.TabIndex = 4;
-            this.buttonManagementClassroom.Text = "QL Lớp học";
-            this.buttonManagementClassroom.UseVisualStyleBackColor = true;
-            this.buttonManagementClassroom.Click += new System.EventHandler(this.buttonManagementClassroom_Click);
+            this.buttonQLLopHoc.Location = new System.Drawing.Point(230, 165);
+            this.buttonQLLopHoc.Name = "buttonQLLopHoc";
+            this.buttonQLLopHoc.Size = new System.Drawing.Size(183, 76);
+            this.buttonQLLopHoc.TabIndex = 4;
+            this.buttonQLLopHoc.Text = "QL Lớp học";
+            this.buttonQLLopHoc.UseVisualStyleBackColor = true;
+            this.buttonQLLopHoc.Click += new System.EventHandler(this.buttonManagementClassroom_Click);
             // 
-            // buttonManagementSubjects
+            // buttonQLMonHoc
             // 
-            this.buttonManagementSubjects.Location = new System.Drawing.Point(31, 165);
-            this.buttonManagementSubjects.Name = "buttonManagementSubjects";
-            this.buttonManagementSubjects.Size = new System.Drawing.Size(183, 76);
-            this.buttonManagementSubjects.TabIndex = 3;
-            this.buttonManagementSubjects.Text = "QL Môn học";
-            this.buttonManagementSubjects.UseVisualStyleBackColor = true;
+            this.buttonQLMonHoc.Location = new System.Drawing.Point(31, 165);
+            this.buttonQLMonHoc.Name = "buttonQLMonHoc";
+            this.buttonQLMonHoc.Size = new System.Drawing.Size(183, 76);
+            this.buttonQLMonHoc.TabIndex = 3;
+            this.buttonQLMonHoc.Text = "QL Môn học";
+            this.buttonQLMonHoc.UseVisualStyleBackColor = true;
+            this.buttonQLMonHoc.Click += new System.EventHandler(this.buttonQLMonHoc_Click);
             // 
-            // buttonManagementLecturers
+            // buttonQLGiangVien
             // 
-            this.buttonManagementLecturers.Location = new System.Drawing.Point(644, 58);
-            this.buttonManagementLecturers.Name = "buttonManagementLecturers";
-            this.buttonManagementLecturers.Size = new System.Drawing.Size(183, 76);
-            this.buttonManagementLecturers.TabIndex = 2;
-            this.buttonManagementLecturers.Text = "QL Giảng Viên";
-            this.buttonManagementLecturers.UseVisualStyleBackColor = true;
+            this.buttonQLGiangVien.Location = new System.Drawing.Point(644, 58);
+            this.buttonQLGiangVien.Name = "buttonQLGiangVien";
+            this.buttonQLGiangVien.Size = new System.Drawing.Size(183, 76);
+            this.buttonQLGiangVien.TabIndex = 2;
+            this.buttonQLGiangVien.Text = "QL Giảng Viên";
+            this.buttonQLGiangVien.UseVisualStyleBackColor = true;
+            this.buttonQLGiangVien.Click += new System.EventHandler(this.buttonQLGiangVien_Click);
             // 
-            // buttonManagementUsers
+            // buttonQLNguoiDung
             // 
-            this.buttonManagementUsers.Location = new System.Drawing.Point(31, 58);
-            this.buttonManagementUsers.Name = "buttonManagementUsers";
-            this.buttonManagementUsers.Size = new System.Drawing.Size(183, 76);
-            this.buttonManagementUsers.TabIndex = 1;
-            this.buttonManagementUsers.Text = "QL Người dùng";
-            this.buttonManagementUsers.UseVisualStyleBackColor = true;
-            this.buttonManagementUsers.Click += new System.EventHandler(this.buttonManagementUsers_Click);
+            this.buttonQLNguoiDung.Location = new System.Drawing.Point(31, 58);
+            this.buttonQLNguoiDung.Name = "buttonQLNguoiDung";
+            this.buttonQLNguoiDung.Size = new System.Drawing.Size(183, 76);
+            this.buttonQLNguoiDung.TabIndex = 1;
+            this.buttonQLNguoiDung.Text = "QL Người dùng";
+            this.buttonQLNguoiDung.UseVisualStyleBackColor = true;
+            this.buttonQLNguoiDung.Click += new System.EventHandler(this.buttonManagementUsers_Click);
             // 
-            // buttonManagementStudents
+            // buttonQLSinhVien
             // 
-            this.buttonManagementStudents.Location = new System.Drawing.Point(230, 58);
-            this.buttonManagementStudents.Name = "buttonManagementStudents";
-            this.buttonManagementStudents.Size = new System.Drawing.Size(183, 76);
-            this.buttonManagementStudents.TabIndex = 0;
-            this.buttonManagementStudents.Text = "QL Sinh Viên";
-            this.buttonManagementStudents.UseVisualStyleBackColor = true;
-            this.buttonManagementStudents.Click += new System.EventHandler(this.buttonManagementStudents_Click);
+            this.buttonQLSinhVien.Location = new System.Drawing.Point(230, 58);
+            this.buttonQLSinhVien.Name = "buttonQLSinhVien";
+            this.buttonQLSinhVien.Size = new System.Drawing.Size(183, 76);
+            this.buttonQLSinhVien.TabIndex = 0;
+            this.buttonQLSinhVien.Text = "QL Sinh Viên";
+            this.buttonQLSinhVien.UseVisualStyleBackColor = true;
+            this.buttonQLSinhVien.Click += new System.EventHandler(this.buttonManagementStudents_Click);
             // 
             // FormManager
             // 
@@ -423,12 +426,12 @@
         private Label labelFullname;
         private Label label1;
         private GroupBox groupBox2;
-        private Button buttonManagementFaculty;
-        private Button buttonManagementClassroom;
-        private Button buttonManagementSubjects;
-        private Button buttonManagementLecturers;
-        private Button buttonManagementUsers;
-        private Button buttonManagementStudents;
+        private Button buttonQLKhoa;
+        private Button buttonQLLopHoc;
+        private Button buttonQLMonHoc;
+        private Button buttonQLGiangVien;
+        private Button buttonQLNguoiDung;
+        private Button buttonQLSinhVien;
         private Button buttonQLDiemSV;
     }
 }

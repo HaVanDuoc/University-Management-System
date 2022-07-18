@@ -26,12 +26,13 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog="+ GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
             }
             catch
             {
                 MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 
@@ -112,7 +113,7 @@ namespace UniversityManagementSystem
 
             if (password == confirmPassword)
             {
-                command = new SqlCommand("SELECT * FROM Table_Users WHERE username = '" + textBoxUsername.Text + "'", connection);
+                command = new SqlCommand("SELECT * FROM " + GloabalVariables.tableNguoiDung + " WHERE username = '" + textBoxUsername.Text + "'", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
@@ -130,7 +131,7 @@ namespace UniversityManagementSystem
                     command = new SqlCommand();
                     command.Connection = connection;
 
-                    string query = @"INSERT INTO Table_Users VALUES(@fullname, @username, @password)";
+                    string query = @"INSERT INTO " + GloabalVariables.tableNguoiDung + " VALUES(@fullname, @username, @password)";
                     command.CommandText = query;
                     command.Parameters.AddWithValue("@fullname", fullname);
                     command.Parameters.AddWithValue("@username", username);

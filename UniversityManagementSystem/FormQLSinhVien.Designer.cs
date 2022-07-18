@@ -36,13 +36,6 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.listViewList = new System.Windows.Forms.ListView();
             this.columnHeaderId = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderMasoSV = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderHoTen = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderGioiTinh = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderNgaySinh = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderKhoa = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderNoiSinh = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderDanToc = new System.Windows.Forms.ColumnHeader();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
@@ -66,6 +59,13 @@
             this.textBoxMSSV = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.columnHeaderMSSV = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderHoTen = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderGioiTinh = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderNgaySinh = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderKhoa = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderNoiSinh = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderDanToc = new System.Windows.Forms.ColumnHeader();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -152,7 +152,7 @@
             // 
             this.listViewList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderId,
-            this.columnHeaderMasoSV,
+            this.columnHeaderMSSV,
             this.columnHeaderHoTen,
             this.columnHeaderGioiTinh,
             this.columnHeaderNgaySinh,
@@ -171,41 +171,6 @@
             // columnHeaderId
             // 
             this.columnHeaderId.Text = "ID";
-            // 
-            // columnHeaderMasoSV
-            // 
-            this.columnHeaderMasoSV.Text = "MSSV";
-            this.columnHeaderMasoSV.Width = 100;
-            // 
-            // columnHeaderHoTen
-            // 
-            this.columnHeaderHoTen.Text = "Họ Tên";
-            this.columnHeaderHoTen.Width = 250;
-            // 
-            // columnHeaderGioiTinh
-            // 
-            this.columnHeaderGioiTinh.Text = "Giới Tính";
-            this.columnHeaderGioiTinh.Width = 150;
-            // 
-            // columnHeaderNgaySinh
-            // 
-            this.columnHeaderNgaySinh.Text = "Ngày Sinh";
-            this.columnHeaderNgaySinh.Width = 200;
-            // 
-            // columnHeaderKhoa
-            // 
-            this.columnHeaderKhoa.Text = "Khoa";
-            this.columnHeaderKhoa.Width = 250;
-            // 
-            // columnHeaderNoiSinh
-            // 
-            this.columnHeaderNoiSinh.Text = "Nơi Sinh";
-            this.columnHeaderNoiSinh.Width = 300;
-            // 
-            // columnHeaderDanToc
-            // 
-            this.columnHeaderDanToc.Text = "Dân Tộc";
-            this.columnHeaderDanToc.Width = 150;
             // 
             // label1
             // 
@@ -475,6 +440,41 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tìm kiếm";
             // 
+            // columnHeaderMSSV
+            // 
+            this.columnHeaderMSSV.Text = "MSSV";
+            this.columnHeaderMSSV.Width = 150;
+            // 
+            // columnHeaderHoTen
+            // 
+            this.columnHeaderHoTen.Text = "Họ Tên";
+            this.columnHeaderHoTen.Width = 250;
+            // 
+            // columnHeaderGioiTinh
+            // 
+            this.columnHeaderGioiTinh.Text = "Giới Tính";
+            this.columnHeaderGioiTinh.Width = 150;
+            // 
+            // columnHeaderNgaySinh
+            // 
+            this.columnHeaderNgaySinh.Text = "Ngày Sinh";
+            this.columnHeaderNgaySinh.Width = 150;
+            // 
+            // columnHeaderKhoa
+            // 
+            this.columnHeaderKhoa.Text = "Khoa";
+            this.columnHeaderKhoa.Width = 200;
+            // 
+            // columnHeaderNoiSinh
+            // 
+            this.columnHeaderNoiSinh.Text = "Nơi Sinh";
+            this.columnHeaderNoiSinh.Width = 300;
+            // 
+            // columnHeaderDanToc
+            // 
+            this.columnHeaderDanToc.Text = "Dân Tộc";
+            this.columnHeaderDanToc.Width = 150;
+            // 
             // FormQLSinhVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 22F);
@@ -508,7 +508,6 @@
         private Button buttonEdit;
         private Button buttonAdd;
         private ListView listViewList;
-        private ColumnHeader columnHeaderMasoSV;
         private Label label1;
         private Button buttonSearch;
         private TextBox textBoxSearch;
@@ -530,14 +529,15 @@
         private Label label3;
         private ComboBox comboBoxKhoa;
         private Label label9;
-        private ColumnHeader columnHeaderHoTen;
-        private ColumnHeader columnHeaderGioiTinh;
-        private ColumnHeader columnHeaderNgaySinh;
-        private ColumnHeader columnHeaderNoiSinh;
-        private ColumnHeader columnHeaderDanToc;
-        private ColumnHeader columnHeaderKhoa;
         private TextBox textBoxId;
         private Label label5;
         private ColumnHeader columnHeaderId;
+        private ColumnHeader columnHeaderMSSV;
+        private ColumnHeader columnHeaderHoTen;
+        private ColumnHeader columnHeaderGioiTinh;
+        private ColumnHeader columnHeaderNgaySinh;
+        private ColumnHeader columnHeaderKhoa;
+        private ColumnHeader columnHeaderNoiSinh;
+        private ColumnHeader columnHeaderDanToc;
     }
 }

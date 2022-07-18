@@ -21,23 +21,34 @@ namespace UniversityManagementSystem
             InitializeComponent();
         }
 
+        // Cancel Button
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
+
         private void FormManager_Load(object sender, EventArgs e)
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=UniversityManagementData;Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog="+GloabalVariables.databaseName+";Integrated Security=True");
                 connection.Open();
             }
             catch
             {
                 MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             // Load thông tin người dùng
-
             command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT * FROM Table_Users WHERE username='" + FormLogin.logged + "'";
+            command.CommandText = "SELECT * FROM " + GloabalVariables.tableNguoiDung + " WHERE username='" + GloabalVariables.logged + "'";
             reader = command.ExecuteReader();
 
             if (reader.Read())
@@ -45,19 +56,6 @@ namespace UniversityManagementSystem
                 labelFullname.Text = reader["fullname"].ToString();
                 labelUsername.Text = reader["username"].ToString();
                 labelPassword.Text = reader["password"].ToString();
-
-                // fullname
-                //int fullnameIndex = reader.GetOrdinal("fullname");
-                //string fullname = reader.GetString(fullnameIndex);
-
-                // username
-                //int usernameIndex = reader.GetOrdinal("username");
-                //string username = reader.GetString(usernameIndex);
-
-                // password
-                //int passwordIndex = reader.GetOrdinal("password");
-                //string password = reader.GetString(usernameIndex);
-
             }
             else
             {
@@ -93,7 +91,7 @@ namespace UniversityManagementSystem
             DialogResult dlr = MessageBox.Show("Bạn có muốn đăng xuất?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if(dlr == DialogResult.Yes)
             {
-                FormLogin.logged = "";
+                GloabalVariables.logged = "";
                 this.Close();
             }
         }
@@ -112,6 +110,21 @@ namespace UniversityManagementSystem
             this.Hide();
             form.ShowDialog();
             this.Show();
+        }
+
+        private void buttonQLDiemSV_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonQLGiangVien_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonQLMonHoc_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
