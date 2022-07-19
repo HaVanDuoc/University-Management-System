@@ -114,7 +114,10 @@ namespace UniversityManagementSystem
 
         private void buttonQLDiemSV_Click(object sender, EventArgs e)
         {
-
+            var form = new FormQLDiemSinhVien();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
         }
 
         private void buttonQLGiangVien_Click(object sender, EventArgs e)
