@@ -124,7 +124,10 @@ namespace UniversityManagementSystem
 
         private void buttonQLMonHoc_Click(object sender, EventArgs e)
         {
-
+            var form = new FormMonHoc();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
         }
     }
 }

@@ -209,20 +209,24 @@ namespace UniversityManagementSystem
                         DialogResult dlr = MessageBox.Show("Mã sinh viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         if (dlr == DialogResult.OK)
                         {
-                            textBoxId.Focus();
+                            textBoxMSSV.Focus();
                         }
                     }
                     else
                     {
-                        reader.Close();
-                        command = new SqlCommand();
-                        command.Connection = connection;
-                        string query = @"update SinhVien set mssv = N'"+mssv+"', hoTen = N'"+hoten+"', gioiTinh = N'"+gioitinh+"', ngaySinh = N'"+ngaysinh+"',  noiSinh = N'"+noisinh+"', danToc = N'"+dantoc+"', khoa_id = Khoa.id from Khoa inner join SinhVien on Khoa.tenKhoa = N'"+khoa+"' where SinhVien.id = '"+id+"';";
-                        command.CommandText = query;
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ShowList();
-                        Clear();
+                        DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (dlr == DialogResult.Yes)
+                        {
+                            reader.Close();
+                            command = new SqlCommand();
+                            command.Connection = connection;
+                            string query = @"update SinhVien set mssv = N'"+mssv+"', hoTen = N'"+hoten+"', gioiTinh = N'"+gioitinh+"', ngaySinh = N'"+ngaysinh+"',  noiSinh = N'"+noisinh+"', danToc = N'"+dantoc+"', khoa_id = Khoa.id from Khoa inner join SinhVien on Khoa.tenKhoa = N'"+khoa+"' where SinhVien.id = '"+id+"';";
+                            command.CommandText = query;
+                            command.ExecuteNonQuery();
+                            MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ShowList();
+                            Clear();
+                        }
                     }
                 }
                 catch (Exception ex)
