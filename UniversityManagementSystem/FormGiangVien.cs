@@ -69,7 +69,7 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = 
+            query = 
                 "SELECT GiangVien.id, msgv, hoTen, gioiTinh, ngaySinh, Khoa.tenKhoa, noiSinh, danToc " +
                 "FROM GiangVien " +
                     "LEFT JOIN Khoa ON GiangVien.khoa_id = Khoa.id ";
@@ -106,13 +106,17 @@ namespace UniversityManagementSystem
         private void LoadComboBoxKhoa()
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
+
             query = "SELECT * FROM " + GloabalVariables.tableKhoa + " ";
+
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
             dataSet = new DataSet();
             dataAdapter.Fill(dataSet, "khoa");
+
             if (connection.State == System.Data.ConnectionState.Open) connection.Close();
+
             comboBoxKhoa.DataSource = dataSet;
             comboBoxKhoa.ValueMember = "khoa.id";
             comboBoxKhoa.DisplayMember = "khoa.tenKhoa";
@@ -171,7 +175,6 @@ namespace UniversityManagementSystem
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            // msgv
             if (string.IsNullOrEmpty(textBoxMSGV.Text))
             {
                 dlr = MessageBox.Show("Vui lòng nhập Mã giảng viên!", "Thông báo", MessageBoxButtons.OKCancel, 
@@ -180,7 +183,6 @@ namespace UniversityManagementSystem
                 return;
             }
 
-            // họ tên
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
                 dlr = MessageBox.Show("Vui lòng nhập Tên giảng viên!", "Thông báo", MessageBoxButtons.OKCancel, 
@@ -189,8 +191,7 @@ namespace UniversityManagementSystem
                 return;
             }
 
-            // Check Sex
-            String gioitinh = "Chưa xác định";
+            gioitinh = "Chưa xác định";
             if (checkBoxNam.Checked == true) gioitinh = "Nam";
             if (checkBoxNu.Checked == true) gioitinh = "Nữ";
 
@@ -284,7 +285,8 @@ namespace UniversityManagementSystem
                     }
                     else
                     {
-                        dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                            MessageBoxIcon.Question);
                         if (dlr == DialogResult.Yes)
                         {
                             reader.Close();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace UniversityManagementSystem
 {
@@ -19,3 +15,4 @@ namespace UniversityManagementSystem
         public static String tableGiangVien = "GiangVien";
     }
 }
+

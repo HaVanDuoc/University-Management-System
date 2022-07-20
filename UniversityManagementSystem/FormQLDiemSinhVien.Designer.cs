@@ -328,6 +328,7 @@
             this.textBoxDiemLan2.Name = "textBoxDiemLan2";
             this.textBoxDiemLan2.Size = new System.Drawing.Size(116, 30);
             this.textBoxDiemLan2.TabIndex = 20;
+            this.textBoxDiemLan2.TextChanged += new System.EventHandler(this.textBoxDiemLan2_TextChanged);
             // 
             // label9
             // 

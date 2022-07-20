@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace UniversityManagementSystem
@@ -72,7 +65,6 @@ namespace UniversityManagementSystem
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
             query = "SELECT * FROM " + table + "";
-
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
@@ -108,14 +100,16 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;
+                    Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
                 LoadComboBoxAddressClassroom();
                 ShowList();
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return;
             }
         }
@@ -133,7 +127,8 @@ namespace UniversityManagementSystem
         {
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                dlr = MessageBox.Show("Vui lòng nhập mã lớp!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập mã lớp!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxName.Focus();
                 return;
             }
@@ -142,33 +137,30 @@ namespace UniversityManagementSystem
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String malop = textBoxName.Text.Trim();
-                String coso = comboBoxDiaChi.Text.Trim();
-
-                // 
+                malop = textBoxName.Text.Trim();
+                coso = comboBoxDiaChi.Text.Trim();
                 command = new SqlCommand("SELECT * FROM " + table + " WHERE tenLop = N'" + malop + "'", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     reader.Close();
-                    dlr = MessageBox.Show("Mã lớp này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    if (dlr == DialogResult.OK)
-                    {
-                        textBoxName.Focus();
-                    }
+                    dlr = MessageBox.Show("Mã lớp này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, 
+                        MessageBoxIcon.Warning);
+                    if (dlr == DialogResult.OK) textBoxName.Focus();
                 }
                 else
                 {
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO " + table + " VALUES(@lop, @coso)";
+                    query = @"INSERT INTO " + table + " VALUES(@lop, @coso)";
                     command.CommandText = query;
                     command.Parameters.AddWithValue("@lop", malop);
                     command.Parameters.AddWithValue("@coso", coso);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Đã thêm lớp " + malop + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã thêm lớp " + malop + "!", "Thông báo", MessageBoxButtons.OK, 
+                        MessageBoxIcon.Information);
                     ShowList();
                     Clear();
                 }
@@ -192,33 +184,37 @@ namespace UniversityManagementSystem
                 id = textBoxId.Text;
                 malop = textBoxName.Text;
                 coso = comboBoxDiaChi.Text;
-                query = "UPDATE "+table+" SET tenLop = N'" + malop + "', diaChiLop = N'" + coso + "' WHERE id = " + id + "";
+                query =
+                    "UPDATE " + table + " " +
+                    "SET tenLop = N'" + malop + "', diaChiLop = N'" + coso + "' " +
+                    "WHERE id = " + id + "";
 
                 try
                 {
-                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Question);
 
                     if (dlr == DialogResult.Yes)
                     {
                         // check ma lop
-                        command = new SqlCommand("SELECT * FROM " + table + " WHERE tenLop = N'" + malop + "' AND id != "+id+" ", connection);
+                        query = "SELECT * FROM " + table + " WHERE tenLop = N'" + malop + "' AND id != " + id + "";
+                        command = new SqlCommand(query, connection);
                         reader = command.ExecuteReader();
 
                         if (reader.Read())
                         {
                             reader.Close();
-                            dlr = MessageBox.Show("Mã lớp này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            if (dlr == DialogResult.OK)
-                            {
-                                textBoxName.Focus();
-                            }
+                            dlr = MessageBox.Show("Mã lớp này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, 
+                                MessageBoxIcon.Warning);
+                            if (dlr == DialogResult.OK) textBoxName.Focus();
                         }
                         else
                         {
                             reader.Close();
                             command = new SqlCommand(query, connection);
                             command.ExecuteNonQuery();
-                            MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, 
+                                MessageBoxIcon.Information);
                             ShowList();
                             Clear();
                         }
@@ -235,7 +231,8 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn Lớp học!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Vui lòng chọn Lớp học!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
                 return;
             }
         }
@@ -251,7 +248,8 @@ namespace UniversityManagementSystem
 
                 try
                 {
-                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Question);
 
                     if (dlr == DialogResult.Yes)
                     {

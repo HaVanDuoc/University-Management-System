@@ -7,6 +7,9 @@ namespace UniversityManagementSystem
         SqlConnection connection;
         SqlCommand command;
         SqlDataReader reader;
+        String username;
+        String password;
+        DialogResult dlr;
 
         public FormLogin()
         {
@@ -17,12 +20,14 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;
+                    Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return;
             }
         }
@@ -58,13 +63,14 @@ namespace UniversityManagementSystem
         private void buttonLogin_Click(object sender, EventArgs e)
         {
 
-            string username = textBoxUsername.Text;
-            string password = textBoxPassword.Text;
+            username = textBoxUsername.Text;
+            password = textBoxPassword.Text;
 
             // username
             if (string.IsNullOrEmpty(username))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxUsername.Focus();
                 return;
             }
@@ -72,19 +78,22 @@ namespace UniversityManagementSystem
             // password
             if (string.IsNullOrEmpty(password))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxPassword.Focus();
                 return;
             }
 
-            if (connection.State == System.Data.ConnectionState.Closed)
-            {
-                connection.Open();
-            }
+            if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
             command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT * FROM " + GloabalVariables.tableNguoiDung + " WHERE username='" + username + "' AND password='" + password + "'";
+
+            command.CommandText = 
+                "SELECT * " +
+                "FROM " + GloabalVariables.tableNguoiDung + " " +
+                "WHERE username='" + username + "' AND password='" + password + "'";
+
             reader = command.ExecuteReader();
 
             if (reader.Read())
@@ -97,21 +106,13 @@ namespace UniversityManagementSystem
             }
             else
             {
-                DialogResult dlr = MessageBox.Show("Tên đăng nhập hoặc mật khẩu không chính xác!", "Thông báo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
-                if (dlr == DialogResult.Retry)
-                {
-                    textBoxUsername.Focus();
-                }
-                if (dlr == DialogResult.Cancel)
-                {
-                    this.Close();
-                }
+                dlr = MessageBox.Show("Tên đăng nhập hoặc mật khẩu không chính xác!", "Thông báo", 
+                    MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
+                if (dlr == DialogResult.Retry) textBoxUsername.Focus();
+                if (dlr == DialogResult.Cancel) this.Close();
             }
 
-            if (connection.State == System.Data.ConnectionState.Open)
-            {
-                connection.Close();
-            }
+            if (connection.State == System.Data.ConnectionState.Open) connection.Close();
         }
 
         private void labelRegister_Click(object sender, EventArgs e)

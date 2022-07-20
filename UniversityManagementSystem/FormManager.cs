@@ -8,6 +8,8 @@ namespace UniversityManagementSystem
         private SqlConnection connection;
         private SqlCommand command;
         private SqlDataReader reader;
+        String query;
+        DialogResult dlr;
         public FormManager()
         {
             InitializeComponent();
@@ -28,19 +30,25 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;
+                    Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return;
             }
 
             // Load thông tin người dùng
             command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "SELECT * FROM " + GloabalVariables.tableNguoiDung + " WHERE username='" + GloabalVariables.logged + "'";
+            query =
+                "SELECT * " +
+                "FROM " + GloabalVariables.tableNguoiDung + " " +
+                "WHERE username='" + GloabalVariables.logged + "'";
+            command.CommandText = query;
             reader = command.ExecuteReader();
 
             if (reader.Read())
@@ -80,7 +88,8 @@ namespace UniversityManagementSystem
 
         private void buttonLogOut_Click(object sender, EventArgs e)
         {
-            DialogResult dlr = MessageBox.Show("Bạn có muốn đăng xuất?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            dlr = MessageBox.Show("Bạn có muốn đăng xuất?", "Thông báo", MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question);
             if(dlr == DialogResult.Yes)
             {
                 GloabalVariables.logged = "";

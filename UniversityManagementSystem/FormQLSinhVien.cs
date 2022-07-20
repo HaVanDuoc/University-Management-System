@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace UniversityManagementSystem
@@ -24,6 +17,16 @@ namespace UniversityManagementSystem
         private DataSet dataSet;
         private SqlDataReader reader;
         String table = GloabalVariables.tableSinhVien;
+        String query;
+        String gioitinh;
+        String dantoc;
+        String noisinh;
+        String khoa;
+        String id;
+        String mssv;
+        String hoten;
+        String ngaysinh;
+        DialogResult dlr;
 
         // Cancel Button
         protected override bool ProcessDialogKey(Keys keyData)
@@ -66,7 +69,9 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = "SELECT SinhVien.id, mssv, hoTen, gioiTinh, ngaySinh, Khoa.tenKhoa, noiSinh, danToc FROM SinhVien LEFT JOIN Khoa ON SinhVien.khoa_id = Khoa.id ";
+            query = 
+                "SELECT SinhVien.id, mssv, hoTen, gioiTinh, ngaySinh, Khoa.tenKhoa, noiSinh, danToc " +
+                "FROM SinhVien LEFT JOIN Khoa ON SinhVien.khoa_id = Khoa.id ";
 
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
@@ -100,13 +105,17 @@ namespace UniversityManagementSystem
         private void LoadComboBoxKhoa()
         {
             if(connection.State == System.Data.ConnectionState.Closed) connection.Open();
-            String query = "SELECT * FROM "+ GloabalVariables.tableKhoa + " ";
+
+            query = "SELECT * FROM "+ GloabalVariables.tableKhoa + " ";
+
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
             dataSet = new DataSet();
             dataAdapter.Fill(dataSet, "khoa");
+
             if(connection.State == System.Data.ConnectionState.Open) connection.Close();
+
             comboBoxKhoa.DataSource = dataSet;
             comboBoxKhoa.ValueMember = "khoa.id";
             comboBoxKhoa.DisplayMember = "khoa.tenKhoa";
@@ -116,14 +125,16 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;
+                    Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
                 LoadComboBoxKhoa();
                 ShowList();
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return;
             }
         }
@@ -131,8 +142,17 @@ namespace UniversityManagementSystem
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             String searchData = textBoxSearch.Text;
-            String searchQuery = "Select SinhVien.id, mssv, hoTen, gioiTinh, ngaySinh, Khoa.tenKhoa, noiSinh, danToc from SinhVien LEFT JOIN Khoa ON SinhVien.khoa_id = Khoa.id Where mssv Like N'%" + searchData + "%' or hoTen Like N'%" + searchData + "%' or gioiTinh Like N'%" + searchData + "%' or ngaySinh Like N'%" + searchData + "%' or noiSinh Like N'%" + searchData + "%' or danToc Like N'%" + searchData + "%' or Khoa.tenKhoa Like N'%" + searchData + "%'";
-            command = new SqlCommand(searchQuery, connection);
+            query = 
+                "Select SinhVien.id, mssv, hoTen, gioiTinh, ngaySinh, Khoa.tenKhoa, noiSinh, danToc " +
+                "from SinhVien LEFT JOIN Khoa ON SinhVien.khoa_id = Khoa.id " +
+                "Where mssv Like N'%" + searchData + "%' " +
+                    "or hoTen Like N'%" + searchData + "%' " +
+                    "or gioiTinh Like N'%" + searchData + "%' " +
+                    "or ngaySinh Like N'%" + searchData + "%' " +
+                    "or noiSinh Like N'%" + searchData + "%' " +
+                    "or danToc Like N'%" + searchData + "%' " +
+                    "or Khoa.tenKhoa Like N'%" + searchData + "%'";
+            command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
             dataSet = new DataSet();
@@ -140,7 +160,7 @@ namespace UniversityManagementSystem
 
             // Load listView
             DataTable dataTable;
-            dataTable = ReadList(searchQuery);
+            dataTable = ReadList(query);
             LoadList(dataTable);
         }
 
@@ -183,44 +203,50 @@ namespace UniversityManagementSystem
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String gioitinh = "Chưa xác định";
+                gioitinh = "Chưa xác định";
                 if (checkBoxNam.Checked == true) gioitinh = "Nam";
                 if (checkBoxNu.Checked == true) gioitinh = "Nữ";
 
-                String id = textBoxId.Text.Trim();
-                String mssv = textBoxMSSV.Text.Trim();
-                String hoten = textBoxName.Text.Trim();
-                String ngaysinh = dateTimePickerNgaySinh.Value.ToString("dd-MM-yyyy");
-                String khoa = comboBoxKhoa.Text.Trim();
-                String noisinh = textBoxNoiSinh.Text.Trim();
-                String dantoc = textBoxDanToc.Text.Trim();
+                id = textBoxId.Text.Trim();
+                mssv = textBoxMSSV.Text.Trim();
+                hoten = textBoxName.Text.Trim();
+                ngaysinh = dateTimePickerNgaySinh.Value.ToString("dd-MM-yyyy");
+                khoa = comboBoxKhoa.Text.Trim();
+                noisinh = textBoxNoiSinh.Text.Trim();
+                dantoc = textBoxDanToc.Text.Trim();
 
                 try
                 {
                     if (connection.State == ConnectionState.Closed) connection.Open();
 
                     // Kiểm tra tài khoản đã tồn tại hay chưa
-                    command = new SqlCommand("SELECT * FROM " + table + " WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ", connection);
+                    query = "SELECT * FROM " + table + " WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ";
+                    command = new SqlCommand(query, connection);
                     reader = command.ExecuteReader();
 
                     if (reader.Read())
                     {
                         reader.Close();
-                        DialogResult dlr = MessageBox.Show("Mã sinh viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        if (dlr == DialogResult.OK)
-                        {
-                            textBoxMSSV.Focus();
-                        }
+                        dlr = MessageBox.Show("Mã sinh viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK, 
+                            MessageBoxIcon.Warning);
+                        if (dlr == DialogResult.OK) textBoxMSSV.Focus();
                     }
                     else
                     {
-                        DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                            MessageBoxIcon.Question);
                         if (dlr == DialogResult.Yes)
                         {
                             reader.Close();
                             command = new SqlCommand();
                             command.Connection = connection;
-                            string query = @"update SinhVien set mssv = N'"+mssv+"', hoTen = N'"+hoten+"', gioiTinh = N'"+gioitinh+"', ngaySinh = N'"+ngaysinh+"',  noiSinh = N'"+noisinh+"', danToc = N'"+dantoc+"', khoa_id = Khoa.id from Khoa inner join SinhVien on Khoa.tenKhoa = N'"+khoa+"' where SinhVien.id = '"+id+"';";
+                            query = 
+                                "update SinhVien " +
+                                "set mssv = N'"+mssv+"', hoTen = N'"+hoten+"', gioiTinh = N'"+gioitinh+"', " +
+                                    "ngaySinh = N'"+ngaysinh+"',  noiSinh = N'"+noisinh+"', danToc = N'"+dantoc+"', " +
+                                    "khoa_id = Khoa.id " +
+                                "from Khoa inner join SinhVien on Khoa.tenKhoa = N'"+khoa+"' " +
+                                "where SinhVien.id = '"+id+"';";
                             command.CommandText = query;
                             command.ExecuteNonQuery();
                             MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -250,7 +276,8 @@ namespace UniversityManagementSystem
             // massv
             if (string.IsNullOrEmpty(textBoxMSSV.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập Mã sinh viên!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập Mã sinh viên!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxMSSV.Focus();
                 return;
             }
@@ -258,40 +285,39 @@ namespace UniversityManagementSystem
             // họ tên
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập Tên sinh viên!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập Tên sinh viên!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxName.Focus();
                 return;
             }
 
-            // Check Sex
-            String gioitinh = "Chưa xác định";
+            gioitinh = "Chưa xác định";
             if(checkBoxNam.Checked == true) gioitinh = "Nam";
             if(checkBoxNu.Checked == true) gioitinh = "Nữ";
 
-            String id = textBoxId.Text.Trim();
-            String mssv = textBoxMSSV.Text.Trim();
-            String hoten = textBoxName.Text.Trim();
-            String ngaysinh = dateTimePickerNgaySinh.Value.ToString("dd-MM-yyyy");
-            String noisinh = textBoxNoiSinh.Text.Trim();
-            String dantoc = textBoxDanToc.Text.Trim();
-            String khoa = comboBoxKhoa.Text.Trim();
+            id = textBoxId.Text.Trim();
+            mssv = textBoxMSSV.Text.Trim();
+            hoten = textBoxName.Text.Trim();
+            ngaysinh = dateTimePickerNgaySinh.Value.ToString("dd-MM-yyyy");
+            noisinh = textBoxNoiSinh.Text.Trim();
+            dantoc = textBoxDanToc.Text.Trim();
+            khoa = comboBoxKhoa.Text.Trim();
 
             try
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
                 // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM " + table + " WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ", connection);
+                query = "SELECT * FROM " + table + " WHERE mssv = N'" + mssv + "' AND id != '" + id + "' ";
+                command = new SqlCommand(query, connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     reader.Close();
-                    DialogResult dlr = MessageBox.Show("Mã sinh viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    if (dlr == DialogResult.OK)
-                    {
-                        textBoxMSSV.Focus();
-                    }
+                    dlr = MessageBox.Show("Mã sinh viên đã tồn tại!", "Thông báo", MessageBoxButtons.OK, 
+                        MessageBoxIcon.Warning);
+                    if (dlr == DialogResult.OK) textBoxMSSV.Focus();
                 }
                 else
                 {
@@ -299,9 +325,12 @@ namespace UniversityManagementSystem
                     command = new SqlCommand();
                     command.Connection = connection;
 
-                    String query = "insert into SinhVien(mssv, hoTen, gioiTinh, ngaySinh, noiSinh, danToc, khoa_id) " +
-                        "select N'"+mssv+"', N'"+hoten+"', N'"+gioitinh+"', N'"+ngaysinh+"', N'"+noisinh+"', N'"+dantoc+"', " +
-                        "Khoa.id from Khoa Where Khoa.tenKhoa = N'"+khoa+"'";
+                    query =
+                        "insert into SinhVien(mssv, hoTen, gioiTinh, ngaySinh, noiSinh, danToc, khoa_id) " +
+                        "select N'" + mssv + "', N'" + hoten + "', N'" + gioitinh + "', N'" + ngaysinh + "', " +
+                            "N'" + noisinh + "', N'" + dantoc + "', Khoa.id " +
+                        "from Khoa " +
+                        "Where Khoa.tenKhoa = N'" + khoa + "'";
 
                     command.CommandText = query;
                     command.ExecuteNonQuery();
@@ -325,20 +354,18 @@ namespace UniversityManagementSystem
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+                if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM " + table + " WHERE id = '" + id + "'";
+                id = textBoxId.Text;
+                query = "DELETE FROM " + table + " WHERE id = '" + id + "'";
 
                 try
                 {
-                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Question);
                     if (dlr == DialogResult.Yes)
                     {
-                        command = new SqlCommand(queryDelete, connection);
+                        command = new SqlCommand(query, connection);
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();

@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace UniversityManagementSystem
@@ -19,6 +12,12 @@ namespace UniversityManagementSystem
         private DataSet dataSet;
         private SqlDataReader reader;
         String table = GloabalVariables.tableNguoiDung;
+        String query;
+        DialogResult dlr;
+        String id;
+        String username;
+        String password;
+        String fullname;
 
         // Cancel Button
         protected override bool ProcessDialogKey(Keys keyData)
@@ -61,8 +60,7 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String tableName = GloabalVariables.tableNguoiDung;
-            String query = "SELECT * FROM " + GloabalVariables.tableNguoiDung + " ";
+            query = "SELECT * FROM " + GloabalVariables.tableNguoiDung + " ";
 
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
@@ -102,13 +100,15 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;
+                    Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
                 ShowList();
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return;
             }
         }
@@ -119,7 +119,8 @@ namespace UniversityManagementSystem
             // username
             if (string.IsNullOrEmpty(textBoxUsername.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập tên đăng nhập!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if(dlr == DialogResult.OK) textBoxUsername.Focus();
                 return;
             }
@@ -127,7 +128,8 @@ namespace UniversityManagementSystem
             // password
             if (string.IsNullOrEmpty(textBoxPassword.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", 
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxPassword.Focus();
                 return;
             }
@@ -135,7 +137,8 @@ namespace UniversityManagementSystem
             // fullname
             if (string.IsNullOrEmpty(textBoxFullname.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập họ tên!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập họ tên!", "Thông báo", 
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxFullname.Focus();
                 return;
             }
@@ -144,35 +147,35 @@ namespace UniversityManagementSystem
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String username = textBoxUsername.Text.Trim();
-                String password = textBoxPassword.Text.Trim();
-                String fullname = textBoxFullname.Text.Trim();
+                username = textBoxUsername.Text.Trim();
+                password = textBoxPassword.Text.Trim();
+                fullname = textBoxFullname.Text.Trim();
 
                 // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM " + table + " WHERE username = '" + username + "'", connection);
+                query = "SELECT * FROM " + table + " WHERE username = '" + username + "'";
+                command = new SqlCommand(query, connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     reader.Close();
-                    DialogResult dlr = MessageBox.Show("Tài khoản đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    if (dlr == DialogResult.OK)
-                    {
-                        textBoxUsername.Focus();
-                    }
+                    DialogResult dlr = MessageBox.Show("Tài khoản đã tồn tại!", "Thông báo", MessageBoxButtons.OK, 
+                        MessageBoxIcon.Warning);
+                    if (dlr == DialogResult.OK) textBoxUsername.Focus();
                 }
                 else
                 {
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO "+table+" VALUES(@fullname, @username, @password)";
+                    query = @"INSERT INTO "+table+" VALUES(@fullname, @username, @password)";
                     command.CommandText = query;
                     command.Parameters.AddWithValue("@fullname", fullname);
                     command.Parameters.AddWithValue("@username", username);
                     command.Parameters.AddWithValue("@password", password);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Tài khoản của bạn đã được tạo", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Tài khoản của bạn đã được tạo", "Thông báo", MessageBoxButtons.OK, 
+                        MessageBoxIcon.Information);
                     ShowList();
                     Clear();
                 }
@@ -196,23 +199,25 @@ namespace UniversityManagementSystem
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+                if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text;
-                String username = textBoxUsername.Text;
-                String password = textBoxPassword.Text;
-                String fullname = textBoxFullname.Text;
-                String queryUpdate = "UPDATE " + table + " SET fullname = N'" + fullname + "', username = N'" + username + "', password = '" + password + "' WHERE id = '" + id + "'";
+                id = textBoxId.Text;
+                username = textBoxUsername.Text;
+                password = textBoxPassword.Text;
+                fullname = textBoxFullname.Text;
+                query = 
+                    "UPDATE " + table + " " +
+                    "SET fullname = N'" + fullname + "', username = N'" + username + "', " +
+                        "password = '" + password + "' " +
+                    "WHERE id = '" + id + "'";
 
                 try
                 {
-                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Question);
                     if (dlr == DialogResult.Yes)
                     {
-                        command = new SqlCommand(queryUpdate, connection);
+                        command = new SqlCommand(query, connection);
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
@@ -230,31 +235,29 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
                 return;
             }
         }
-
 
         //delete
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+                if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM " + table + " WHERE id = '" + id + "'";
+                id = textBoxId.Text;
+                query = "DELETE FROM " + table + " WHERE id = '" + id + "'";
 
                 try
                 {
-                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Question);
                     if (dlr == DialogResult.Yes)
                     {
-                        command = new SqlCommand(queryDelete, connection);
+                        command = new SqlCommand(query, connection);
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
@@ -272,7 +275,8 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn người dùng!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Warning);
                 return;
             }
         }
@@ -284,9 +288,14 @@ namespace UniversityManagementSystem
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            command = new SqlCommand("Select * from " + table + " Where username Like'%" + textBoxSearch.Text + "%' or fullname Like'%" + textBoxSearch.Text + "%'", connection);
-            SqlDataReader reader;
+            query =
+                "Select * " +
+                "from " + table + " " +
+                "Where username Like'%" + textBoxSearch.Text + "%' " +
+                    "or fullname Like'%" + textBoxSearch.Text + "%'";
 
+            command = new SqlCommand(query, connection);
+            SqlDataReader reader;
             connection.Open();
 
             reader = command.ExecuteReader();
@@ -296,11 +305,11 @@ namespace UniversityManagementSystem
             {
                 while (reader.Read())
                 {
-                    ListViewItem item = new ListViewItem(reader[0].ToString()); // Or you can specify column name - ListViewItem item = new ListViewItem(reader["column_name"].ToString()); 
+                    ListViewItem item = new ListViewItem(reader[0].ToString());
                     item.SubItems.Add(reader[1].ToString());
                     item.SubItems.Add(reader[2].ToString());
                     item.SubItems.Add(reader[3].ToString());
-                    listViewList.Items.Add(item); // add this item to your ListView with all of his subitems
+                    listViewList.Items.Add(item);
                 }
             }
             reader.Close();
@@ -309,7 +318,6 @@ namespace UniversityManagementSystem
 
         private void listViewList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // list users
             int i = listViewList.FocusedItem.Index;
             if (i < 0) return;
             textBoxId.Text = listViewList.Items[i].Text;

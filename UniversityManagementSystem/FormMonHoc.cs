@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace UniversityManagementSystem
@@ -24,6 +17,11 @@ namespace UniversityManagementSystem
         private DataSet dataSet;
         private SqlDataReader reader;
         String table = GloabalVariables.tableMonHoc;
+        String query;
+        DialogResult dlr;
+        String sotinchi;
+        String tenmon;
+        String id;
 
         // Cancel Button
         protected override bool ProcessDialogKey(Keys keyData)
@@ -66,8 +64,7 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = "SELECT * FROM " + table + " ";
-
+            query = "SELECT * FROM " + table + " ";
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
@@ -95,13 +92,15 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;
+                    Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
                 ShowList();
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return;
             }
         }
@@ -120,32 +119,30 @@ namespace UniversityManagementSystem
             // ten mon
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập Tên môn học!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập Tên môn học!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxName.Focus();
                 return;
-            }
-            
+            }          
 
-            String id = textBoxId.Text.Trim();
-            String tenmon = textBoxName.Text.Trim();
-            String sotinchi = textBoxSoTinChi.Text.Trim();
+            id = textBoxId.Text.Trim();
+            tenmon = textBoxName.Text.Trim();
+            sotinchi = textBoxSoTinChi.Text.Trim();
 
             try
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM " + table + " WHERE tenMonHoc = N'" + tenmon + "' AND id != '" + id + "' ", connection);
+                query = "SELECT * FROM " + table + " WHERE tenMonHoc = N'" + tenmon + "' AND id != '" + id + "' ";
+                command = new SqlCommand(query, connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     reader.Close();
-                    DialogResult dlr = MessageBox.Show("Đã có môn học này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    if (dlr == DialogResult.OK)
-                    {
-                        textBoxName.Focus();
-                    }
+                    DialogResult dlr = MessageBox.Show("Đã có môn học này!", "Thông báo", MessageBoxButtons.OK, 
+                        MessageBoxIcon.Warning);
+                    if (dlr == DialogResult.OK) textBoxName.Focus();
                 }
                 else
                 {
@@ -153,7 +150,9 @@ namespace UniversityManagementSystem
                     command = new SqlCommand();
                     command.Connection = connection;
 
-                    String query = "INSERT INTO " + table + " (tenMonHoc, tinChi) VALUES (N'" + tenmon + "', N'" + sotinchi + "')";
+                    query = 
+                        "INSERT INTO " + table + " (tenMonHoc, tinChi) " +
+                        "VALUES (N'" + tenmon + "', N'" + sotinchi + "')";
 
                     command.CommandText = query;
                     command.ExecuteNonQuery();
@@ -179,15 +178,16 @@ namespace UniversityManagementSystem
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM " + table + " WHERE id = '" + id + "'";
+                id = textBoxId.Text;
+                query = "DELETE FROM " + table + " WHERE id = '" + id + "'";
 
                 try
                 {
-                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Question);
                     if (dlr == DialogResult.Yes)
                     {
-                        command = new SqlCommand(queryDelete, connection);
+                        command = new SqlCommand(query, connection);
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
@@ -221,35 +221,37 @@ namespace UniversityManagementSystem
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text.Trim();
-                String tenmon = textBoxName.Text.Trim();
-                String sotinchi = textBoxSoTinChi.Text.Trim();
+                id = textBoxId.Text.Trim();
+                tenmon = textBoxName.Text.Trim();
+                sotinchi = textBoxSoTinChi.Text.Trim();
 
                 try
                 {
                     if (connection.State == ConnectionState.Closed) connection.Open();
 
-                    command = new SqlCommand("SELECT * FROM " + table + " WHERE tenMonHoc = N'" + tenmon + "' AND id != '" + id + "' ", connection);
+                    query = "SELECT * FROM " + table + " WHERE tenMonHoc = N'" + tenmon + "' AND id != '" + id + "' ";
+                    command = new SqlCommand(query, connection);
                     reader = command.ExecuteReader();
 
                     if (reader.Read())
                     {
                         reader.Close();
-                        DialogResult dlr = MessageBox.Show("Đã có môn này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        if (dlr == DialogResult.OK)
-                        {
-                            textBoxName.Focus();
-                        }
+                        dlr = MessageBox.Show("Đã có môn này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        if (dlr == DialogResult.OK) textBoxName.Focus();
                     }
                     else
                     {
-                        DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                            MessageBoxIcon.Question);
                         if (dlr == DialogResult.Yes)
                         {
                             reader.Close();
                             command = new SqlCommand();
                             command.Connection = connection;
-                            string query = "UPDATE " + table + " SET tenMonHoc = N'" + tenmon + "', tinChi = N'" + sotinchi + "' WhERE id = " + id + "";
+                            query = 
+                                "UPDATE " + table + " " +
+                                "SET tenMonHoc = N'" + tenmon + "', tinChi = N'" + sotinchi + "' " +
+                                "WhERE id = " + id + "";
                             command.CommandText = query;
                             command.ExecuteNonQuery();
                             MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -277,8 +279,11 @@ namespace UniversityManagementSystem
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             String searchData = textBoxSearch.Text;
-            String searchQuery = "SELECT * FROM MonHoc WHERE tenMonHoc LIKE N'%" + searchData + "%' OR tinChi Like N'%" + searchData + "%' ";
-            command = new SqlCommand(searchQuery, connection);
+            query = 
+                "SELECT * " +
+                "FROM MonHoc " +
+                "WHERE tenMonHoc LIKE N'%" + searchData + "%' OR tinChi Like N'%" + searchData + "%' ";
+            command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
             dataSet = new DataSet();
@@ -286,7 +291,7 @@ namespace UniversityManagementSystem
 
             // Load listView
             DataTable dataTable;
-            dataTable = ReadList(searchQuery);
+            dataTable = ReadList(query);
             LoadList(dataTable);
         }
     }

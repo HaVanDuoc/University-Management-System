@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace UniversityManagementSystem
@@ -25,6 +18,15 @@ namespace UniversityManagementSystem
         private SqlDataReader reader;
         String table = GloabalVariables.tableDiem;
         String query;
+        String monhoc;
+        DialogResult dlr;
+        String ketQua;
+        String mon;
+        String diemLan2;
+        String diemLan1;
+        String mssv;
+        String id;
+        String hoten;
 
         // Cancel Button
         protected override bool ProcessDialogKey(Keys keyData)
@@ -67,12 +69,13 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String monhoc = comboBoxMonHoc.Text.Trim();
+            monhoc = comboBoxMonHoc.Text.Trim();
 
-            String query = "SELECT d.id,s.mssv, s.hoTen, diemLan1, diemLan2, ketQua " +
+            query = 
+                "SELECT d.id,s.mssv, s.hoTen, diemLan1, diemLan2, ketQua " +
                 "FROM Diem d " +
-                "JOIN MonHoc m ON d.monhoc_id = m.id " +
-                "Join SinhVien s ON d.sinhvien_id = s.id " +
+                    "JOIN MonHoc m ON d.monhoc_id = m.id " +
+                    "Join SinhVien s ON d.sinhvien_id = s.id " +
                 "WHERE m.tenMonHoc = N'" + monhoc + "'";
 
             command = new SqlCommand(query, connection);
@@ -95,7 +98,6 @@ namespace UniversityManagementSystem
             textBoxId.Text = "";
             textBoxMSSV.Text = "";
             textBoxName.Text = "";
-            //comboBoxMonHoc.SelectedIndex = 0;
             textBoxDiemLan1.Text = "";
             textBoxDiemLan2.Text = "";
             labelKetQua.Text = "";
@@ -104,13 +106,16 @@ namespace UniversityManagementSystem
         private void LoadComboBoxMonHoc()
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
-            String query = "SELECT * FROM " + GloabalVariables.tableMonHoc + " ";
+
+            query = "SELECT * FROM " + GloabalVariables.tableMonHoc + " ";
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
             dataSet = new DataSet();
             dataAdapter.Fill(dataSet, "table");
+
             if (connection.State == System.Data.ConnectionState.Open) connection.Close();
+
             comboBoxMonHoc.DataSource = dataSet;
             comboBoxMonHoc.ValueMember = "table.id";
             comboBoxMonHoc.DisplayMember = "table.tenMonHoc";
@@ -120,7 +125,8 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;
+                    Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
                 LoadComboBoxMonHoc();
                 labelKetQua.Text = "";
@@ -128,7 +134,8 @@ namespace UniversityManagementSystem
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
                 return;
             }
         }
@@ -165,7 +172,8 @@ namespace UniversityManagementSystem
             // mssv
             if (string.IsNullOrEmpty(textBoxMSSV.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập Mã sinh viên!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập Mã sinh viên!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxMSSV.Focus();
                 return;
             }
@@ -173,25 +181,27 @@ namespace UniversityManagementSystem
             // diem
             if (string.IsNullOrEmpty(textBoxDiemLan1.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập điểm!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập điểm!", "Thông báo", MessageBoxButtons.OKCancel, 
+                    MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxDiemLan1.Focus();
                 return;
             }
 
-            String id = textBoxId.Text.Trim();
-            String mssv = textBoxMSSV.Text.Trim();
-            String diemLan1 = textBoxDiemLan1.Text.Trim();
-            String diemLan2 = textBoxDiemLan2.Text.Trim();
-            String mon = comboBoxMonHoc.Text.Trim();
+            id = textBoxId.Text.Trim();
+            mssv = textBoxMSSV.Text.Trim();
+            diemLan1 = textBoxDiemLan1.Text.Trim();
+            diemLan2 = textBoxDiemLan2.Text.Trim();
+            mon = comboBoxMonHoc.Text.Trim();
 
-            String ketQua = "KHÔNG ĐẠT";
-            if(int.Parse(textBoxDiemLan1.Text.Trim()) > 5 || int.Parse(textBoxDiemLan2.Text.Trim()) > 5) ketQua = "ĐẠT";
+            ketQua = "KHÔNG ĐẠT";
+            if(int.Parse(textBoxDiemLan1.Text.Trim()) > 5 || int.Parse(textBoxDiemLan2.Text.Trim()) > 5) 
+                ketQua = "ĐẠT";
 
             try
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String query = 
+                query = 
                     "SELECT * FROM Diem " +
                         "LEFT JOIN SinhVien ON Diem.sinhvien_id = SinhVien.id " +
                         "LEFT JOIN MonHoc ON Diem.monhoc_id = MonHoc.id " +
@@ -203,16 +213,13 @@ namespace UniversityManagementSystem
                 if (reader.Read())
                 {
                     reader.Close();
-                    DialogResult dlr = MessageBox.Show("Sinh viên đã có điểm trong danh sách!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    if (dlr == DialogResult.OK)
-                    {
-                        textBoxMSSV.Focus();
-                    }
+                    dlr = MessageBox.Show("Sinh viên đã có điểm trong danh sách!", "Thông báo", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (dlr == DialogResult.OK) textBoxMSSV.Focus();
                 }
                 else
                 {
                     reader.Close();
-
                     command = new SqlCommand();
                     command.Connection = connection;
 
@@ -232,7 +239,8 @@ namespace UniversityManagementSystem
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Không tìm thấy sinh viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không tìm thấy sinh viên!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
             finally
             {
@@ -246,29 +254,35 @@ namespace UniversityManagementSystem
             {
                 if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text.Trim();
-                String mssv = textBoxMSSV.Text.Trim();
-                String diemLan1 = textBoxDiemLan1.Text.Trim();
-                String diemLan2 = textBoxDiemLan2.Text.Trim();
-                String mon = comboBoxMonHoc.Text.Trim();
+                id = textBoxId.Text.Trim();
+                mssv = textBoxMSSV.Text.Trim();
+                diemLan1 = textBoxDiemLan1.Text.Trim();
+                diemLan2 = textBoxDiemLan2.Text.Trim();
+                mon = comboBoxMonHoc.Text.Trim();
 
-                String ketqua = "KHÔNG ĐẠT";
-                if (int.Parse(textBoxDiemLan1.Text.Trim()) >= 5 || int.Parse(textBoxDiemLan2.Text.Trim()) >= 5) ketqua = "ĐẠT";
+                ketQua = "KHÔNG ĐẠT";
+                if (int.Parse(textBoxDiemLan1.Text.Trim()) >= 5 || int.Parse(textBoxDiemLan2.Text.Trim()) >= 5) 
+                    ketQua = "ĐẠT";
 
                 try
                 {
                     if (connection.State == ConnectionState.Closed) connection.Open();
 
-                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, 
+                        MessageBoxIcon.Question);
                     if (dlr == DialogResult.Yes)
                     {
                         command = new SqlCommand();
                         command.Connection = connection;
-                        query = "UPDATE Diem SET diemLan1 = N'" + diemLan1 + "', diemLan2 = N'" + diemLan2 + "', " +
-                            "ketQua = N'" + ketqua + "' WhERE id = " + id + " ";
+                        query = 
+                            "UPDATE Diem " +
+                            "SET diemLan1 = N'" + diemLan1 + "', diemLan2 = N'" + diemLan2 + "', " +
+                                "ketQua = N'" + ketQua + "' " +
+                            "WhERE id = " + id + " ";
                         command.CommandText = query;
                         command.ExecuteNonQuery();
-                        MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, 
+                            MessageBoxIcon.Information);
                         ShowList();
                         Clear();
                     }
@@ -284,7 +298,8 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn Sinh viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Vui lòng chọn Sinh viên!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
                 return;
             }
         }
@@ -293,20 +308,17 @@ namespace UniversityManagementSystem
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+                if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM " + table + " WHERE id = '" + id + "'";
+                id = textBoxId.Text;
+                query = "DELETE FROM " + table + " WHERE id = '" + id + "'";
 
                 try
                 {
                     DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dlr == DialogResult.Yes)
                     {
-                        command = new SqlCommand(queryDelete, connection);
+                        command = new SqlCommand(query, connection);
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
@@ -324,7 +336,8 @@ namespace UniversityManagementSystem
             }
             else
             {
-                MessageBox.Show("Vui lòng chọn Sinh viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn Sinh viên!", "Thông báo", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Warning);
                 return;
             }
         }
@@ -336,17 +349,17 @@ namespace UniversityManagementSystem
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            String mon = comboBoxMonHoc.Text.Trim();
-            String mssv = textBoxMSSV.Text.Trim();
-            String hoten = textBoxName.Text.Trim();
-            String searchQuery =
+            mon = comboBoxMonHoc.Text.Trim();
+            mssv = textBoxMSSV.Text.Trim();
+            hoten = textBoxName.Text.Trim();
+            query =
                 "SELECT d.id, s.mssv, s.hoTen, d.diemLan1, d.diemLan2, d.ketQua " +
                 "FROM Diem d " +
                     "LEFT JOIN MonHoc m ON d.monhoc_id = m.id " +
                     "LEFT JOIN SinhVien s ON d.sinhvien_id = s.id " +
                 "WHERE s.mssv Like N'%" + mssv + "%' OR s.hoTen Like N'%" + hoten + "%' AND m.tenMonHoc = N'" + mon + "' ";
 
-            command = new SqlCommand(searchQuery, connection);
+            command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
             dataAdapter.SelectCommand = command;
             dataSet = new DataSet();
@@ -354,8 +367,13 @@ namespace UniversityManagementSystem
 
             // Load listView
             DataTable dataTable;
-            dataTable = ReadList(searchQuery);
+            dataTable = ReadList(query);
             LoadList(dataTable);
+        }
+
+        private void textBoxDiemLan2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
