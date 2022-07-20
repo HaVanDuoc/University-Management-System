@@ -217,8 +217,9 @@
             this.labelPassword.AutoSize = true;
             this.labelPassword.Location = new System.Drawing.Point(165, 440);
             this.labelPassword.Name = "labelPassword";
-            this.labelPassword.Size = new System.Drawing.Size(0, 22);
+            this.labelPassword.Size = new System.Drawing.Size(128, 22);
             this.labelPassword.TabIndex = 6;
+            this.labelPassword.Text = "labelPassword";
             // 
             // label5
             // 
@@ -232,10 +233,11 @@
             // labelFullname
             // 
             this.labelFullname.AutoSize = true;
-            this.labelFullname.Location = new System.Drawing.Point(159, 360);
+            this.labelFullname.Location = new System.Drawing.Point(165, 360);
             this.labelFullname.Name = "labelFullname";
-            this.labelFullname.Size = new System.Drawing.Size(0, 22);
+            this.labelFullname.Size = new System.Drawing.Size(123, 22);
             this.labelFullname.TabIndex = 4;
+            this.labelFullname.Text = "labelFullname";
             // 
             // label1
             // 
@@ -251,8 +253,9 @@
             this.labelUsername.AutoSize = true;
             this.labelUsername.Location = new System.Drawing.Point(165, 401);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(0, 22);
+            this.labelUsername.Size = new System.Drawing.Size(128, 22);
             this.labelUsername.TabIndex = 2;
+            this.labelUsername.Text = "labelUsername";
             // 
             // label2
             // 

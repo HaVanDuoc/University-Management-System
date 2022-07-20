@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿
 using System.Data.SqlClient;
 
 namespace UniversityManagementSystem
@@ -36,7 +28,7 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog="+GloabalVariables.databaseName+";Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
             }
             catch
@@ -122,7 +114,10 @@ namespace UniversityManagementSystem
 
         private void buttonQLGiangVien_Click(object sender, EventArgs e)
         {
-
+            var form = new FormGiangVien();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
         }
 
         private void buttonQLMonHoc_Click(object sender, EventArgs e)

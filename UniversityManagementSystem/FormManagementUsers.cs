@@ -20,6 +20,17 @@ namespace UniversityManagementSystem
         private SqlDataReader reader;
         String table = GloabalVariables.tableNguoiDung;
 
+        // Cancel Button
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
+
         // Đọc danh sách
         DataTable ReadList(String query)
         {
