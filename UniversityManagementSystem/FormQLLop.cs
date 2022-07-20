@@ -23,6 +23,23 @@ namespace UniversityManagementSystem
         private SqlDataAdapter dataAdapter;
         private DataSet dataSet;
         private SqlDataReader reader;
+        private String table = GloabalVariables.tableLopHoc;
+        String query;
+        String id;
+        String malop;
+        String coso;
+        DialogResult dlr;
+
+        // Cancel Button
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (Form.ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessDialogKey(keyData);
+        }
 
         // Đọc danh sách
         DataTable ReadList(String query)
@@ -54,7 +71,7 @@ namespace UniversityManagementSystem
         {
             if (connection.State == System.Data.ConnectionState.Closed) connection.Open();
 
-            String query = "SELECT * FROM Table_LopHoc";
+            query = "SELECT * FROM " + table + "";
 
             command = new SqlCommand(query, connection);
             dataAdapter = new SqlDataAdapter();
@@ -71,7 +88,7 @@ namespace UniversityManagementSystem
         }
 
         // Reset textbox
-        private void ResetTextBox()
+        private void Clear()
         {
             textBoxId.Text = "";
             textBoxName.Text = "";
@@ -91,16 +108,16 @@ namespace UniversityManagementSystem
         {
             try
             {
-                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=QLTruongDaiHoc;Integrated Security=True");
+                connection = new SqlConnection(@"Data Source=LAPTOP-H1GC0D8K;Initial Catalog=" + GloabalVariables.databaseName + ";Integrated Security=True");
                 connection.Open();
+                LoadComboBoxAddressClassroom();
                 ShowList();
             }
             catch
             {
                 MessageBox.Show("Không thể kết nối cơ sở dữ liệu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-
-            LoadComboBoxAddressClassroom();
         }
 
         private void listViewList_SelectedIndexChanged(object sender, EventArgs e)
@@ -116,7 +133,7 @@ namespace UniversityManagementSystem
         {
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                DialogResult dlr = MessageBox.Show("Vui lòng nhập mã lớp!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                dlr = MessageBox.Show("Vui lòng nhập mã lớp!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 if (dlr == DialogResult.OK) textBoxName.Focus();
                 return;
             }
@@ -128,14 +145,14 @@ namespace UniversityManagementSystem
                 String malop = textBoxName.Text.Trim();
                 String coso = comboBoxDiaChi.Text.Trim();
 
-                // Kiểm tra tài khoản đã tồn tại hay chưa
-                command = new SqlCommand("SELECT * FROM Table_LopHoc WHERE tenLop = N'" + malop + "'", connection);
+                // 
+                command = new SqlCommand("SELECT * FROM " + table + " WHERE tenLop = N'" + malop + "'", connection);
                 reader = command.ExecuteReader();
 
                 if (reader.Read())
                 {
                     reader.Close();
-                    DialogResult dlr = MessageBox.Show("Mã lớp này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    dlr = MessageBox.Show("Mã lớp này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     if (dlr == DialogResult.OK)
                     {
                         textBoxName.Focus();
@@ -146,14 +163,14 @@ namespace UniversityManagementSystem
                     reader.Close();
                     command = new SqlCommand();
                     command.Connection = connection;
-                    string query = @"INSERT INTO Table_LopHoc VALUES(@lop, @coso)";
+                    string query = @"INSERT INTO " + table + " VALUES(@lop, @coso)";
                     command.CommandText = query;
                     command.Parameters.AddWithValue("@lop", malop);
                     command.Parameters.AddWithValue("@coso", coso);
                     command.ExecuteNonQuery();
                     MessageBox.Show("Đã thêm lớp " + malop + "!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowList();
-                    ResetTextBox();
+                    Clear();
                 }
             }
             catch (Exception ex)
@@ -170,26 +187,41 @@ namespace UniversityManagementSystem
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+                if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text;
-                String malop = textBoxName.Text;
-                String coso = comboBoxDiaChi.Text;
-                String queryUpdate = "UPDATE Table_LopHoc SET tenLop = N'" + malop + "', diaChiLop = N'" + coso + "' WHERE id = " + id + "";
+                id = textBoxId.Text;
+                malop = textBoxName.Text;
+                coso = comboBoxDiaChi.Text;
+                query = "UPDATE "+table+" SET tenLop = N'" + malop + "', diaChiLop = N'" + coso + "' WHERE id = " + id + "";
 
                 try
                 {
-                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
                     if (dlr == DialogResult.Yes)
                     {
-                        command = new SqlCommand(queryUpdate, connection);
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ShowList();
-                        ResetTextBox();
+                        // check ma lop
+                        command = new SqlCommand("SELECT * FROM " + table + " WHERE tenLop = N'" + malop + "' AND id != "+id+" ", connection);
+                        reader = command.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            reader.Close();
+                            dlr = MessageBox.Show("Mã lớp này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            if (dlr == DialogResult.OK)
+                            {
+                                textBoxName.Focus();
+                            }
+                        }
+                        else
+                        {
+                            reader.Close();
+                            command = new SqlCommand(query, connection);
+                            command.ExecuteNonQuery();
+                            MessageBox.Show("Đã cập nhật!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ShowList();
+                            Clear();
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -212,24 +244,22 @@ namespace UniversityManagementSystem
         {
             if (!string.IsNullOrEmpty(textBoxId.Text))
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+                if (connection.State == ConnectionState.Closed) connection.Open();
 
-                String id = textBoxId.Text;
-                String queryDelete = "DELETE FROM Table_LopHoc WHERE id = '" + id + "'";
+                id = textBoxId.Text;
+                query = "DELETE FROM " + table + " WHERE id = '" + id + "'";
 
                 try
                 {
-                    DialogResult dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dlr = MessageBox.Show("Bạn đã chắc chắn?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
                     if (dlr == DialogResult.Yes)
                     {
-                        command = new SqlCommand(queryDelete, connection);
+                        command = new SqlCommand(query, connection);
                         command.ExecuteNonQuery();
                         MessageBox.Show("Đã xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ShowList();
-                        ResetTextBox();
+                        Clear();
                     }
                 }
                 catch (Exception ex)
@@ -255,14 +285,19 @@ namespace UniversityManagementSystem
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            ResetTextBox();
+            Clear();
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             String searchData = textBoxSearch.Text;
-            String searchQuery = "Select * from Table_LopHoc Where tenLop Like N'%" + searchData + "%' or diaChiLop Like N'%" + searchData + "%' ";
-            command = new SqlCommand(searchQuery, connection);
+            query =
+                "Select * " +
+                "from " + table + " " +
+                "Where tenLop Like N'%" + searchData + "%' " +
+                    "or diaChiLop Like N'%" + searchData + "%' ";
+
+            command = new SqlCommand(query, connection);
             SqlDataReader reader;
             connection.Open();
             reader = command.ExecuteReader();

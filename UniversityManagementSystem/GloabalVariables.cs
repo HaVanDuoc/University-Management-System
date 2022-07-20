@@ -15,5 +15,7 @@ namespace UniversityManagementSystem
         public static String tableKhoa = "Khoa";
         public static String tableMonHoc = "MonHoc";
         public static String tableDiem = "Diem";
+        public static String tableLopHoc = "LopHoc";
+        public static String tableGiangVien = "GiangVien";
     }
 }
