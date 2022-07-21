@@ -194,8 +194,14 @@ namespace UniversityManagementSystem
             mon = comboBoxMonHoc.Text.Trim();
 
             ketQua = "KHÔNG ĐẠT";
-            if(int.Parse(textBoxDiemLan1.Text.Trim()) > 5 || int.Parse(textBoxDiemLan2.Text.Trim()) > 5) 
-                ketQua = "ĐẠT";
+            if (diemLan2 == "")
+            {
+                if (Int32.Parse(diemLan1) >= 5) ketQua = "ĐẠT";
+            }
+            else if(diemLan2 != "")
+            {
+                if (Int32.Parse(diemLan1) >= 5 || Int32.Parse(diemLan2) >= 5) ketQua = "ĐẠT";
+            }
 
             try
             {
@@ -261,8 +267,14 @@ namespace UniversityManagementSystem
                 mon = comboBoxMonHoc.Text.Trim();
 
                 ketQua = "KHÔNG ĐẠT";
-                if (int.Parse(textBoxDiemLan1.Text.Trim()) >= 5 || int.Parse(textBoxDiemLan2.Text.Trim()) >= 5) 
-                    ketQua = "ĐẠT";
+                if (diemLan2 == "")
+                {
+                    if (Int32.Parse(diemLan1) >= 5) ketQua = "ĐẠT";
+                }
+                else if (diemLan2 != "")
+                {
+                    if (Int32.Parse(diemLan1) >= 5 || Int32.Parse(diemLan2) >= 5) ketQua = "ĐẠT";
+                }
 
                 try
                 {
