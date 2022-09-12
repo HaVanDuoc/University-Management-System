@@ -23,7 +23,7 @@
 </div>
 
 <div>
-  <h4>Form quản lý người dùng</h4>
+  <h4>Form quản lý tài khoản người dùng</h4>
   <img src="https://github.com/HaVanDuoc/University-Management-System/blob/master/__Preview/form-nguoi-dung.png" width="500px" />
 </div>
 
